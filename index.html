@@ -32,9 +32,8 @@
             --emerald-glow: rgba(5, 150, 105, 0.15);
             --slate-dark: #0f172a;
             --slate-light: #f8fafc;
-            --gold-accent: #d97706;
-            --card-shadow-premium: 0 20px 40px -15px rgba(15, 23, 42, 0.05);
-            --card-shadow-hover: 0 25px 50px -12px rgba(5, 150, 105, 0.2);
+            --card-shadow-premium: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
+            --card-shadow-hover: 0 25px 50px -12px rgba(5, 150, 105, 0.25);
         }
         
         body { 
@@ -47,56 +46,41 @@
             overflow-x: hidden;
         }
 
-        /* FOND DYNAMIQUE ET MOTIF D'ARRIÈRE-PLAN */
-        body::before {
-            content: "";
+        /* ARRIÈRE-PLAN VIVANT TYPE PAYSAGE PAR LA FENÊTRE */
+        .bg-window-landscape {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                radial-gradient(rgba(5, 150, 105, 0.06) 1px, transparent 1px),
-                linear-gradient(to right, rgba(15, 23, 42, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
-            background-size: 32px 32px, 64px 64px, 64px 64px;
-            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(248, 250, 252, 0.88), rgba(248, 250, 252, 0.94)),
+                        url('https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
             z-index: -2;
+            animation: slowZoom 25s infinite alternate ease-in-out;
         }
 
-        /* EFFET DE LUMIÈRE FLOTTANTE EN ARRIÈRE-PLAN (ORBES) */
-        .bg-glow-1 {
+        [data-bs-theme="dark"] .bg-window-landscape {
+            background: linear-gradient(to bottom, rgba(11, 15, 25, 0.90), rgba(11, 15, 25, 0.96)),
+                        url('https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+        }
+
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        /* LUMIÈRE FLOTTANTE DE FOND */
+        .bg-glow-emerald {
             position: fixed;
-            top: -10%;
-            right: -5%;
-            width: 500px;
-            height: 500px;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 700px;
             background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
-            border-radius: 50%;
-            filter: blur(60px);
-            pointer-events: none;
-            z-index: -1;
-            animation: floatGlow 12s infinite alternate ease-in-out;
-        }
-
-        .bg-glow-2 {
-            position: fixed;
-            bottom: 10%;
-            left: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(13, 148, 136, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
-            border-radius: 50%;
             filter: blur(80px);
             pointer-events: none;
             z-index: -1;
-            animation: floatGlow 16s infinite alternate-reverse ease-in-out;
-        }
-
-        @keyframes floatGlow {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, 40px) scale(1.1); }
-            100% { transform: translate(-20px, 20px) scale(0.95); }
         }
 
         h1, h2, h3, .brand-font {
@@ -123,9 +107,9 @@
             color: var(--emerald-main);
         }
 
-        /* NAVIGATION FLOTTANTE */
+        /* NAVIGATION FLOTTANTE VERRE DÉPOLI */
         .navbar-premium { 
-            background: rgba(255, 255, 255, 0.88) !important; 
+            background: rgba(255, 255, 255, 0.8) !important; 
             backdrop-filter: blur(16px); 
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(226, 232, 240, 0.8); 
@@ -134,15 +118,9 @@
         }
 
         [data-bs-theme="dark"] body { background-color: #0b0f19; color: #f8fafc; }
-        [data-bs-theme="dark"] body::before {
-            background-image: 
-                radial-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
         [data-bs-theme="dark"] .top-header { background-color: #020617; }
         [data-bs-theme="dark"] .navbar-premium { 
-            background: rgba(11, 15, 25, 0.88) !important; 
+            background: rgba(11, 15, 25, 0.8) !important; 
             border-bottom: 1px solid #1e293b; 
         }
 
@@ -150,9 +128,9 @@
         .navbar-brand:hover .nav-logo { transform: scale(1.04); }
         .brand-eco { color: var(--emerald-main); }
 
-        /* HERO SECTION LUXE */
+        /* HERO SECTION */
         .hero-premium {
-            padding: 90px 0 70px;
+            padding: 80px 0 60px;
         }
 
         .badge-premium {
@@ -168,11 +146,12 @@
             gap: 8px;
         }
 
-        /* CARTES DE LA HERO SECTION */
+        /* CARTES AVEC EFFET GLASSMORPHISM (VERRE DÉPOLI) */
         .card-showcase {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 24px;
             padding: 35px;
             box-shadow: var(--card-shadow-premium);
@@ -180,17 +159,18 @@
         }
 
         [data-bs-theme="dark"] .card-showcase {
-            background: rgba(22, 30, 46, 0.9);
-            border-color: #1e293b;
+            background: rgba(22, 30, 46, 0.85);
+            border-color: rgba(255, 255, 255, 0.08);
         }
 
-        /* STATISTIQUES CARDS CONÇUES AVEC SOIN */
+        /* CARTES STATISTIQUES EN VERRE DÉPOLI */
         .stat-card-premium {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 20px;
-            padding: 30px 20px;
+            padding: 25px 15px;
             text-align: center;
             height: 100%;
             display: flex;
@@ -202,8 +182,8 @@
         }
 
         [data-bs-theme="dark"] .stat-card-premium {
-            background: rgba(22, 30, 46, 0.9);
-            border-color: #1e293b;
+            background: rgba(22, 30, 46, 0.85);
+            border-color: rgba(255, 255, 255, 0.08);
         }
 
         .stat-card-premium:hover {
@@ -212,13 +192,12 @@
             box-shadow: var(--card-shadow-hover);
         }
 
-        /* CORRECTION ET ADAPTATION DE L'ICÔNE FRANCE & RGE */
         .stat-img-wrapper {
-            height: 65px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             width: 100%;
         }
 
@@ -252,24 +231,25 @@
             box-shadow: 0 15px 30px -5px rgba(5, 150, 105, 0.5);
         }
 
-        /* SECTION PARTENAIRES SOUVERAINE */
+        /* SECTION PARTENAIRES */
         .partner-card-premium {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 16px;
             padding: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100px;
+            height: 95px;
             transition: all 0.3s ease;
             box-shadow: var(--card-shadow-premium);
         }
 
         [data-bs-theme="dark"] .partner-card-premium {
-            background: rgba(22, 30, 46, 0.9);
-            border-color: #1e293b;
+            background: rgba(22, 30, 46, 0.85);
+            border-color: rgba(255, 255, 255, 0.08);
         }
 
         .partner-card-premium:hover {
@@ -278,7 +258,7 @@
             box-shadow: var(--card-shadow-hover);
         }
 
-        .partner-logo { max-height: 50px; max-width: 85%; object-fit: contain; }
+        .partner-logo { max-height: 48px; max-width: 85%; object-fit: contain; }
 
         /* CONTACT ITEMS DANS LA MODALE */
         .contact-premium-card {
@@ -301,16 +281,16 @@
         }
 
         footer {
-            background: linear-gradient(180deg, transparent 0%, rgba(5, 150, 105, 0.03) 100%);
-            padding: 70px 0 30px;
+            background: linear-gradient(180deg, transparent 0%, rgba(5, 150, 105, 0.04) 100%);
+            padding: 60px 0 30px;
         }
     </style>
 </head>
 <body>
 
-    <!-- ÉLÉMENTS LUMINEUX DE FOND -->
-    <div class="bg-glow-1"></div>
-    <div class="bg-glow-2"></div>
+    <!-- ARRIÈRE-PLAN VIVANT ET DYNAMIQUE -->
+    <div class="bg-window-landscape"></div>
+    <div class="bg-glow-emerald"></div>
 
     <!-- BARRE DE CONTACT PREMIUM -->
     <div class="top-header d-none d-lg-block">
@@ -341,7 +321,7 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION EN AVANT-GARDE -->
+    <!-- HERO SECTION MODIFIÉE -->
     <section class="hero-premium">
         <div class="container">
             <div class="row align-items-center g-5">
@@ -349,11 +329,11 @@
                     <div class="badge-premium mb-4">
                         <i class="fa-solid fa-award"></i> VOTRE ARTISAN DE PROXIMITÉ - NEMOURS
                     </div>
-                    <h1 class="display-3 fw-black mb-4" style="line-height: 1.15; letter-spacing: -1.5px;">
-                        L'EXCELLENCE DE LA MENUISERIE SUR-MESURE PAR <span class="brand-eco">ECO FENÊTRE</span>
+                    <h1 class="display-4 fw-black mb-4" style="line-height: 1.15; letter-spacing: -1px;">
+                        MENUISERIE SUR-MESURE PAR <span class="brand-eco">ECO FENÊTRE</span>
                     </h1>
-                    <p class="lead text-secondary mb-5 fs-5" style="line-height: 1.8;">
-                        Alliez haute performance énergétique, esthétisme raffiné et maîtrise artisanale. Nos experts vous accompagnent à Nemours pour une pose certifiée RGE aux finitions d'exception.
+                    <p class="lead text-secondary mb-4 fs-5" style="line-height: 1.6;">
+                        L'expertise artisanale à Nemours pour la rénovation de vos fenêtres, volets et portes. Pose certifiée RGE & devis gratuit.
                     </p>
                     <div class="d-flex flex-wrap gap-3">
                         <button class="btn btn-emerald btn-lg px-4 py-3" data-bs-toggle="modal" data-bs-target="#contactModal">
