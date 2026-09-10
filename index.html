@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eco Fenêtre | Menuiserie d'Exception à Nemours</title>
+    
+    <!-- BALISES META SEO POUR GOOGLE -->
+    <title>Eco Fenêtre | Menuiserie & Rénovation Sur-Mesure à Nemours (77)</title>
+    <meta name="description" content="Artisan menuisier certifié RGE à Nemours. Vente et pose de fenêtres, volets, portes et baies vitrées sur-mesure. Devis gratuit sous 24h & garantie décennale.">
+    <meta name="robots" content="index, follow">
+
+    <!-- BALISES POUR LE PARTAGE SUR LES RÉSEAUX SOCIAUX -->
+    <meta property="og:title" content="Eco Fenêtre | Menuiserie & Rénovation Sur-Mesure à Nemours (77)">
+    <meta property="og:description" content="Artisan certifié RGE pour vos fenêtres, volets et menuiseries sur-mesure à Nemours et ses alentours. Devis gratuit sous 24h.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ecofenetre.fr">
+
     <link rel="icon" type="image/png" href="images/favicon.jpeg">
     
     <!-- Bootstrap 5 CSS -->
@@ -32,6 +43,60 @@
             color: var(--slate-dark);
             transition: background-color 0.4s ease, color 0.4s ease;
             letter-spacing: -0.01em;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* FOND DYNAMIQUE ET MOTIF D'ARRIÈRE-PLAN */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(rgba(5, 150, 105, 0.06) 1px, transparent 1px),
+                linear-gradient(to right, rgba(15, 23, 42, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
+            background-size: 32px 32px, 64px 64px, 64px 64px;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        /* EFFET DE LUMIÈRE FLOTTANTE EN ARRIÈRE-PLAN (ORBES) */
+        .bg-glow-1 {
+            position: fixed;
+            top: -10%;
+            right: -5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+            z-index: -1;
+            animation: floatGlow 12s infinite alternate ease-in-out;
+        }
+
+        .bg-glow-2 {
+            position: fixed;
+            bottom: 10%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(13, 148, 136, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: -1;
+            animation: floatGlow 16s infinite alternate-reverse ease-in-out;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 40px) scale(1.1); }
+            100% { transform: translate(-20px, 20px) scale(0.95); }
         }
 
         h1, h2, h3, .brand-font {
@@ -69,6 +134,12 @@
         }
 
         [data-bs-theme="dark"] body { background-color: #0b0f19; color: #f8fafc; }
+        [data-bs-theme="dark"] body::before {
+            background-image: 
+                radial-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
         [data-bs-theme="dark"] .top-header { background-color: #020617; }
         [data-bs-theme="dark"] .navbar-premium { 
             background: rgba(11, 15, 25, 0.88) !important; 
@@ -82,7 +153,6 @@
         /* HERO SECTION LUXE */
         .hero-premium {
             padding: 90px 0 70px;
-            background: radial-gradient(circle at 50% -20%, rgba(5, 150, 105, 0.08) 0%, transparent 70%);
         }
 
         .badge-premium {
@@ -100,7 +170,8 @@
 
         /* CARTES DE LA HERO SECTION */
         .card-showcase {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
             border: 1px solid #e2e8f0;
             border-radius: 24px;
             padding: 35px;
@@ -109,13 +180,14 @@
         }
 
         [data-bs-theme="dark"] .card-showcase {
-            background: #161e2e;
+            background: rgba(22, 30, 46, 0.9);
             border-color: #1e293b;
         }
 
         /* STATISTIQUES CARDS CONÇUES AVEC SOIN */
         .stat-card-premium {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
             border: 1px solid #e2e8f0;
             border-radius: 20px;
             padding: 30px 20px;
@@ -130,7 +202,7 @@
         }
 
         [data-bs-theme="dark"] .stat-card-premium {
-            background: #161e2e;
+            background: rgba(22, 30, 46, 0.9);
             border-color: #1e293b;
         }
 
@@ -182,7 +254,8 @@
 
         /* SECTION PARTENAIRES SOUVERAINE */
         .partner-card-premium {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
             border: 1px solid #e2e8f0;
             border-radius: 16px;
             padding: 18px;
@@ -195,7 +268,7 @@
         }
 
         [data-bs-theme="dark"] .partner-card-premium {
-            background: #161e2e;
+            background: rgba(22, 30, 46, 0.9);
             border-color: #1e293b;
         }
 
@@ -235,6 +308,10 @@
 </head>
 <body>
 
+    <!-- ÉLÉMENTS LUMINEUX DE FOND -->
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
     <!-- BARRE DE CONTACT PREMIUM -->
     <div class="top-header d-none d-lg-block">
         <div class="container d-flex justify-content-between align-items-center">
@@ -273,10 +350,10 @@
                         <i class="fa-solid fa-award"></i> VOTRE ARTISAN DE PROXIMITÉ - NEMOURS
                     </div>
                     <h1 class="display-3 fw-black mb-4" style="line-height: 1.15; letter-spacing: -1.5px;">
-                        SUBLIMEZ VOTRE HABITAT AVEC <span class="brand-eco">ECO FENÊTRE</span>
+                        L'EXCELLENCE DE LA MENUISERIE SUR-MESURE PAR <span class="brand-eco">ECO FENÊTRE</span>
                     </h1>
                     <p class="lead text-secondary mb-5 fs-5" style="line-height: 1.8;">
-                        L'expertise de nos artisans au service de vos projets. La garantie d'une pose irréprochable et d'un chantier rendu propre.
+                        Alliez haute performance énergétique, esthétisme raffiné et maîtrise artisanale. Nos experts vous accompagnent à Nemours pour une pose certifiée RGE aux finitions d'exception.
                     </p>
                     <div class="d-flex flex-wrap gap-3">
                         <button class="btn btn-emerald btn-lg px-4 py-3" data-bs-toggle="modal" data-bs-target="#contactModal">
