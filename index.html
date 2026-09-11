@@ -163,6 +163,48 @@
             border-color: rgba(255, 255, 255, 0.08);
         }
 
+        /* BADGE GOOGLE REVIEWS PREMIUM */
+        .google-review-badge {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(241,245,249,0.85));
+            border: 1px solid rgba(5, 150, 105, 0.2);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        [data-bs-theme="dark"] .google-review-badge {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.85));
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .google-review-badge:hover {
+            transform: translateY(-3px);
+            border-color: var(--emerald-main);
+            box-shadow: 0 15px 30px -5px rgba(5, 150, 105, 0.15);
+        }
+
+        .btn-google-action {
+            background-color: var(--slate-dark);
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-google-action:hover {
+            background-color: var(--emerald-main);
+            color: #ffffff;
+            transform: scale(1.03);
+        }
+
         /* CARTES STATISTIQUES EN VERRE DÉPOLI */
         .stat-card-premium {
             background: rgba(255, 255, 255, 0.85);
@@ -344,6 +386,24 @@
                 
                 <div class="col-lg-5">
                     <div class="card-showcase">
+
+                        <!-- BLOC AVIS GOOGLE D'EXCEPTION (AJOUTÉ JUSTE AU-DESSUS) -->
+                        <div class="google-review-badge d-flex align-items-center justify-content-between">
+                            <div>
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <i class="fa-brands fa-google text-primary fs-5"></i>
+                                    <span class="fw-bold fs-6">Avis Clients</span>
+                                    <div class="text-warning small ms-1">
+                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <p class="small text-secondary mb-0">Recommandé par nos clients</p>
+                            </div>
+                            <a href="https://maps.google.com/?q=Eco+Fenetre+Nemours" target="_blank" class="btn-google-action">
+                                <i class="fa-solid fa-pen-to-square"></i> Évaluer
+                            </a>
+                        </div>
+
                         <div class="d-flex align-items-center mb-4">
                             <div class="bg-success-subtle p-3 rounded-circle me-3 text-success">
                                 <i class="fa-solid fa-shield-halved fs-3"></i>
