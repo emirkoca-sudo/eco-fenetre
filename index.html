@@ -3,536 +3,764 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- BALISES META SEO POUR GOOGLE -->
     <title>Eco Fenêtre | Menuiserie & Rénovation Sur-Mesure à Nemours (77)</title>
-    <meta name="description" content="Artisan menuisier certifié RGE à Nemours. Vente et pose de fenêtres, volets, portes et baies vitrées sur-mesure. Devis gratuit sous 24h & garantie décennale.">
+    <meta name="description" content="Artisan menuisier certifié RGE à Nemours, Seine-et-Marne. Vente et pose de fenêtres, volets, portes et baies vitrées sur-mesure. Devis gratuit sous 24h & garantie décennale.">
     <meta name="robots" content="index, follow">
 
     <!-- BALISES POUR LE PARTAGE SUR LES RÉSEAUX SOCIAUX -->
     <meta property="og:title" content="Eco Fenêtre | Menuiserie & Rénovation Sur-Mesure à Nemours (77)">
-    <meta property="og:description" content="Artisan certifié RGE pour vos fenêtres, volets et menuiseries sur-mesure à Nemours et ses alentours. Devis gratuit sous 24h.">
+    <meta property="og:description" content="Artisan certifié RGE pour vos fenêtres, volets et menuiseries sur-mesure à Nemours et dans le Sud Seine-et-Marne. Devis gratuit sous 24h.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ecofenetre.fr">
 
     <link rel="icon" type="image/png" href="images/favicon.jpeg">
-    
-    <!-- Bootstrap 5 CSS -->
+
+    <!-- Bootstrap 5 CSS (grille, modale) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        :root { 
-            --emerald-main: #059669; 
-            --emerald-hover: #047857;
-            --emerald-soft: #ecfdf5;
-            --emerald-glow: rgba(5, 150, 105, 0.15);
-            --slate-dark: #0f172a;
-            --slate-light: #f8fafc;
-            --card-shadow-premium: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
-            --card-shadow-hover: 0 25px 50px -12px rgba(5, 150, 105, 0.25);
+        /* ============ TOKENS ============ */
+        :root {
+            --ink: #1B2420;
+            --ink-soft: #445048;
+            --paper: #F7F3EC;
+            --paper-soft: #EFE7D6;
+            --oak: #B9814E;
+            --oak-light: #E7CDA4;
+            --sauge: #3F5D4E;
+            --sauge-light: #6E9280;
+            --glass: #A9C3C6;
+            --line: rgba(27, 36, 32, 0.14);
+            --shadow: 0 16px 40px -20px rgba(27, 36, 32, 0.35);
         }
-        
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--slate-light);
-            color: var(--slate-dark);
+
+        [data-bs-theme="dark"] {
+            --ink: #F3EEE3;
+            --ink-soft: #C9BFAE;
+            --paper: #141813;
+            --paper-soft: #1C2119;
+            --oak: #D9AE79;
+            --oak-light: #8A6A44;
+            --sauge: #85AB94;
+            --sauge-light: #3F5D4E;
+            --glass: #5F7B7E;
+            --line: rgba(243, 238, 227, 0.14);
+            --shadow: 0 16px 40px -20px rgba(0, 0, 0, 0.7);
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--paper);
+            color: var(--ink);
             transition: background-color 0.4s ease, color 0.4s ease;
-            letter-spacing: -0.01em;
+        }
+
+        h1, h2, h3, .display-font { font-family: 'Fraunces', serif; }
+
+        a { color: inherit; }
+
+        .text-muted-soft { color: var(--ink-soft); }
+
+        .section-divider {
+            border: none;
+            border-top: 1px solid var(--line);
+            margin: 0;
+        }
+
+        .container-narrow { max-width: 700px; }
+
+        /* motif croisillon réutilisé comme séparateur */
+        .cross-mark {
             position: relative;
-            overflow-x: hidden;
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
         }
-
-        /* ARRIÈRE-PLAN VIVANT TYPE PAYSAGE PAR LA FENÊTRE */
-        .bg-window-landscape {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(248, 250, 252, 0.88), rgba(248, 250, 252, 0.94)),
-                        url('https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
-            z-index: -2;
-            animation: slowZoom 25s infinite alternate ease-in-out;
+        .cross-mark::before, .cross-mark::after {
+            content: "";
+            position: absolute;
+            background: var(--oak);
         }
+        .cross-mark::before { top: 50%; left: 0; right: 0; height: 2px; transform: translateY(-50%); }
+        .cross-mark::after { left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-50%); }
 
-        [data-bs-theme="dark"] .bg-window-landscape {
-            background: linear-gradient(to bottom, rgba(11, 15, 25, 0.90), rgba(11, 15, 25, 0.96)),
-                        url('https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
-        }
-
-        @keyframes slowZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
-        }
-
-        /* LUMIÈRE FLOTTANTE DE FOND */
-        .bg-glow-emerald {
-            position: fixed;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
-            filter: blur(80px);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        h1, h2, h3, .brand-font {
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        /* BARRE SUPÉRIEURE LUXE */
+        /* ============ TOP BAR ============ */
         .top-header {
-            background-color: var(--slate-dark);
-            color: #cbd5e1;
-            font-size: 0.825rem;
+            background-color: var(--ink);
+            color: var(--paper);
+            font-size: 0.82rem;
             font-weight: 500;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 9px 0;
+        }
+        [data-bs-theme="dark"] .top-header { background-color: #0B0E0B; }
+        .top-header a { text-decoration: none; }
+        .top-header a:hover { color: var(--oak-light); }
+        .top-header i { color: var(--oak-light); }
+
+        /* ============ NAVBAR ============ */
+        .navbar-premium {
+            background: rgba(247, 243, 236, 0.86) !important;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line);
+            padding: 14px 0;
+        }
+        [data-bs-theme="dark"] .navbar-premium { background: rgba(20, 24, 19, 0.86) !important; }
+
+        .nav-logo { height: 52px; width: auto; margin-right: 12px; }
+        .navbar-brand { font-family: 'Fraunces', serif; font-weight: 600; letter-spacing: -0.01em; }
+        .brand-oak { color: var(--oak); }
+
+        .btn-theme {
+            background: none;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink);
+            transition: border-color 0.2s ease;
+        }
+        .btn-theme:hover { border-color: var(--oak); }
+
+        .btn-primary-eco {
+            background: var(--sauge);
+            color: var(--paper);
+            font-weight: 600;
+            border: none;
+            border-radius: 4px;
+            padding: 13px 26px;
+            transition: background 0.25s ease, transform 0.2s ease;
+        }
+        .btn-primary-eco:hover { background: var(--ink); color: var(--paper); transform: translateY(-1px); }
+
+        .btn-outline-eco {
+            background: transparent;
+            border: 1.5px solid var(--ink);
+            color: var(--ink);
+            font-weight: 600;
+            border-radius: 4px;
+            padding: 12.5px 26px;
+            transition: all 0.25s ease;
+        }
+        .btn-outline-eco:hover { background: var(--ink); color: var(--paper); }
+
+        /* ============ HERO ============ */
+        .hero { padding: 64px 0 40px; }
+
+        .hero-kicker {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--sauge);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 22px;
+        }
+        [data-bs-theme="dark"] .hero-kicker { color: var(--glass); }
+
+        .hero h1 {
+            font-size: clamp(2.1rem, 4vw, 3.15rem);
+            font-weight: 600;
+            line-height: 1.14;
+            letter-spacing: -0.01em;
+            margin-bottom: 22px;
         }
 
-        .top-header a {
-            color: #f8fafc;
-            text-decoration: none;
-            transition: color 0.2s ease;
+        .hero-lead {
+            font-size: 1.12rem;
+            line-height: 1.65;
+            color: var(--ink-soft);
+            max-width: 46ch;
+            margin-bottom: 30px;
         }
 
-        .top-header a:hover {
-            color: var(--emerald-main);
+        .hero-zone {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 26px;
+            font-size: 0.92rem;
+            color: var(--ink-soft);
+        }
+        .hero-zone i { color: var(--oak); }
+
+        /* --- Fenêtre à volets animée --- */
+        .hero-window-wrap { perspective: 1400px; }
+
+        .hero-window-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 12px solid var(--ink);
+            box-shadow: var(--shadow);
         }
 
-        /* NAVIGATION FLOTTANTE VERRE DÉPOLI */
-        .navbar-premium { 
-            background: rgba(255, 255, 255, 0.8) !important; 
-            backdrop-filter: blur(16px); 
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.8); 
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.03);
-            padding: 12px 0;
+        .hero-scene {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 74% 18%, #FCE7B0 0%, rgba(252,231,176,0) 32%),
+                linear-gradient(180deg, #CDE7E4 0%, #B7D9D1 38%, #DCCB9C 78%, #C9AE79 100%);
+        }
+        .hero-scene::before {
+            /* silhouette de toit / relief, en pur CSS */
+            content: "";
+            position: absolute;
+            left: -10%;
+            right: -10%;
+            bottom: 0;
+            height: 34%;
+            background: var(--sauge);
+            opacity: 0.85;
+            clip-path: polygon(0% 60%, 18% 30%, 34% 55%, 52% 20%, 68% 48%, 86% 15%, 100% 42%, 100% 100%, 0% 100%);
         }
 
-        [data-bs-theme="dark"] body { background-color: #0b0f19; color: #f8fafc; }
-        [data-bs-theme="dark"] .top-header { background-color: #020617; }
-        [data-bs-theme="dark"] .navbar-premium { 
-            background: rgba(11, 15, 25, 0.8) !important; 
-            border-bottom: 1px solid #1e293b; 
+        .mullion-v, .mullion-h {
+            position: absolute;
+            background: var(--ink);
+            z-index: 4;
+        }
+        .mullion-v { left: 50%; top: 0; bottom: 0; width: 7px; transform: translateX(-50%); }
+        .mullion-h { top: 50%; left: 0; right: 0; height: 7px; transform: translateY(-50%); }
+
+        .shutter {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            z-index: 6;
+            background: repeating-linear-gradient(
+                var(--oak) 0px, var(--oak) 15%,
+                #A06F3E 15%, #A06F3E 17%
+            );
+            box-shadow: inset 0 0 0 3px rgba(0,0,0,0.08);
+        }
+        .shutter-left { left: 0; transform-origin: left center; animation: openLeft 1.3s cubic-bezier(.65,0,.25,1) 0.35s both; }
+        .shutter-right { right: 0; transform-origin: right center; animation: openRight 1.3s cubic-bezier(.65,0,.25,1) 0.35s both; }
+
+        @keyframes openLeft {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(-112deg); box-shadow: none; }
+        }
+        @keyframes openRight {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(112deg); box-shadow: none; }
         }
 
-        .nav-logo { height: 58px; width: auto; margin-right: 14px; transition: transform 0.3s ease; }
-        .navbar-brand:hover .nav-logo { transform: scale(1.04); }
-        .brand-eco { color: var(--emerald-main); }
-
-        /* HERO SECTION */
-        .hero-premium {
-            padding: 80px 0 60px;
+        @media (prefers-reduced-motion: reduce) {
+            .shutter-left, .shutter-right { animation: none; transform: rotateY(112deg); opacity: 0; }
         }
 
-        .badge-premium {
-            background: var(--emerald-soft);
-            color: var(--emerald-main);
-            font-weight: 700;
+        /* ============ STATS ============ */
+        .stats-row { padding: 20px 0 70px; }
+
+        .stat-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 4px;
+        }
+
+        .stat-img-wrapper { width: 46px; height: 46px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .stat-img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .stat-block h3 { font-size: 1.3rem; margin: 0; font-weight: 600; }
+        .stat-block p { margin: 0; font-size: 0.86rem; color: var(--ink-soft); }
+
+        /* ============ SERVICES ============ */
+        .services-section { padding: 80px 0; }
+
+        .services-grid {
+            border-top: 1px solid var(--line);
+            border-left: 1px solid var(--line);
+        }
+        .service-pane {
+            border-right: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            padding: 42px 36px;
+            transition: background 0.25s ease;
+        }
+        .service-pane:hover { background: var(--paper-soft); }
+
+        .service-pane i {
+            font-size: 1.5rem;
+            color: var(--oak);
+            margin-bottom: 18px;
+            display: block;
+        }
+        .service-pane h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
+        .service-pane p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.6; margin: 0; }
+
+        /* ============ PROCESS ============ */
+        .process-section { padding: 80px 0; background: var(--paper-soft); }
+
+        .process-step { display: flex; gap: 20px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+        .process-step:last-child { border-bottom: none; }
+
+        .process-num {
+            font-family: 'Fraunces', serif;
+            font-size: 1.6rem;
+            color: var(--oak);
+            flex-shrink: 0;
+            width: 48px;
+        }
+        .process-step h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
+        .process-step p { color: var(--ink-soft); margin: 0; font-size: 0.94rem; line-height: 1.55; }
+
+        /* ============ AVIS GOOGLE ============ */
+        .review-strip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 18px;
+            padding: 30px 36px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: var(--paper);
+        }
+        .review-stars i { color: var(--oak); font-size: 0.9rem; }
+
+        .btn-review {
+            background: transparent;
+            border: 1.5px solid var(--ink);
+            color: var(--ink);
+            font-weight: 600;
             font-size: 0.85rem;
-            padding: 8px 18px;
-            border-radius: 50px;
-            border: 1px solid rgba(5, 150, 105, 0.2);
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-        }
-
-        /* CARTES AVEC EFFET GLASSMORPHISM (VERRE DÉPOLI) */
-        .card-showcase {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 24px;
-            padding: 35px;
-            box-shadow: var(--card-shadow-premium);
-            transition: all 0.3s ease;
-        }
-
-        [data-bs-theme="dark"] .card-showcase {
-            background: rgba(22, 30, 46, 0.85);
-            border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        /* BADGE GOOGLE REVIEWS PREMIUM */
-        .google-review-badge {
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(241,245,249,0.85));
-            border: 1px solid rgba(5, 150, 105, 0.2);
-            border-radius: 16px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
-            transition: all 0.3s ease;
-        }
-
-        [data-bs-theme="dark"] .google-review-badge {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.85));
-            border-color: rgba(16, 185, 129, 0.2);
-        }
-
-        .google-review-badge:hover {
-            transform: translateY(-3px);
-            border-color: var(--emerald-main);
-            box-shadow: 0 15px 30px -5px rgba(5, 150, 105, 0.15);
-        }
-
-        .btn-google-action {
-            background-color: var(--slate-dark);
-            color: #ffffff;
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 8px 16px;
-            border-radius: 50px;
-            text-decoration: none;
             transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
         }
+        .btn-review:hover { background: var(--sauge); border-color: var(--sauge); color: var(--paper); }
 
-        .btn-google-action:hover {
-            background-color: var(--emerald-main);
-            color: #ffffff;
-            transform: scale(1.03);
-        }
+        /* ============ SUIVI CHANTIER ============ */
+        .social-section { padding: 80px 0; }
 
-        /* CARTES STATISTIQUES EN VERRE DÉPOLI */
-        .stat-card-premium {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 20px;
-            padding: 25px 15px;
-            text-align: center;
+        .social-card {
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 34px;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: var(--card-shadow-premium);
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        [data-bs-theme="dark"] .stat-card-premium {
-            background: rgba(22, 30, 46, 0.85);
-            border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .stat-card-premium:hover {
-            transform: translateY(-8px);
-            border-color: var(--emerald-main);
-            box-shadow: var(--card-shadow-hover);
-        }
-
-        .stat-img-wrapper {
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-            width: 100%;
-        }
-
-        .stat-img-wrapper img {
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
-
-        .stat-card-premium:hover .stat-img-wrapper img {
-            transform: scale(1.1);
-        }
-
-        /* BOUTON ULTRA-PRO */
-        .btn-emerald {
-            background: linear-gradient(135deg, #059669, #10b981);
-            color: #ffffff;
-            font-weight: 700;
-            border: none;
-            border-radius: 50px;
-            padding: 14px 32px;
-            letter-spacing: 0.3px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.4);
-        }
-
-        .btn-emerald:hover {
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px -5px rgba(5, 150, 105, 0.5);
-        }
-
-        /* SECTION PARTENAIRES */
-        .partner-card-premium {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 16px;
-            padding: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 95px;
-            transition: all 0.3s ease;
-            box-shadow: var(--card-shadow-premium);
-        }
-
-        [data-bs-theme="dark"] .partner-card-premium {
-            background: rgba(22, 30, 46, 0.85);
-            border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .partner-card-premium:hover {
-            transform: translateY(-5px);
-            border-color: var(--emerald-main);
-            box-shadow: var(--card-shadow-hover);
-        }
-
-        .partner-logo { max-height: 48px; max-width: 85%; object-fit: contain; }
-
-        /* CONTACT ITEMS DANS LA MODALE */
-        .contact-premium-card {
-            background: rgba(5, 150, 105, 0.04);
-            border: 1px solid rgba(5, 150, 105, 0.12);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            transition: all 0.25s ease;
+            transition: border-color 0.25s ease, transform 0.25s ease;
             text-decoration: none;
-            color: inherit;
+            color: var(--ink);
             display: block;
         }
+        .social-card:hover { border-color: var(--oak); transform: translateY(-4px); color: var(--ink); }
+        .social-card i.icon-social { font-size: 1.6rem; color: var(--oak); margin-bottom: 16px; }
+        .social-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 8px; }
+        .social-card p { color: var(--ink-soft); font-size: 0.92rem; margin: 0; }
 
-        .contact-premium-card:hover {
-            background: rgba(5, 150, 105, 0.1);
-            border-color: var(--emerald-main);
-            transform: scale(1.02);
-            color: var(--emerald-main);
+        /* ============ PARTENAIRES ============ */
+        .partners-section { padding: 80px 0; background: var(--paper-soft); }
+
+        .partner-tile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 90px;
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            background: var(--paper);
+            filter: grayscale(45%);
+            opacity: 0.85;
+            transition: all 0.25s ease;
         }
+        .partner-tile:hover { filter: none; opacity: 1; border-color: var(--oak); }
+        .partner-logo { max-height: 44px; max-width: 85%; object-fit: contain; }
 
-        footer {
-            background: linear-gradient(180deg, transparent 0%, rgba(5, 150, 105, 0.04) 100%);
-            padding: 60px 0 30px;
+        /* ============ CTA FINAL ============ */
+        .cta-final {
+            padding: 90px 0;
+            background: var(--ink);
+            color: var(--paper);
+            text-align: center;
+        }
+        .cta-final h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 16px; }
+        .cta-final p { color: rgba(247,243,236,0.72); max-width: 50ch; margin: 0 auto 32px; }
+        .cta-final .btn-primary-eco { background: var(--oak); }
+        .cta-final .btn-primary-eco:hover { background: var(--paper); color: var(--ink); }
+
+        /* ============ FOOTER ============ */
+        footer { padding: 60px 0 30px; border-top: 1px solid var(--line); }
+        .footer-social {
+            width: 40px; height: 40px;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+        .footer-social:hover { border-color: var(--oak); color: var(--oak); }
+
+        /* ============ MODALE CONTACT ============ */
+        .modal-content-eco {
+            background: var(--paper);
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+        }
+        .contact-line {
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 18px;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: var(--ink);
+            display: block;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        .contact-line:hover { border-color: var(--sauge); background: var(--paper-soft); color: var(--ink); }
+        .contact-line i { color: var(--sauge); }
+
+        @media (max-width: 991px) {
+            .service-pane { padding: 30px 24px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ARRIÈRE-PLAN VIVANT ET DYNAMIQUE -->
-    <div class="bg-window-landscape"></div>
-    <div class="bg-glow-emerald"></div>
-
-    <!-- BARRE DE CONTACT PREMIUM -->
+    <!-- BARRE DE CONTACT -->
     <div class="top-header d-none d-lg-block">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-4">
-                <span><i class="fa-solid fa-location-dot me-2 text-success"></i>18 Rue Gaston Darley, 77140 Nemours</span>
-                <span><i class="fa-regular fa-clock me-2 text-success"></i>Lun - Ven : 9h-12h / 14h-17h | Sam : 9h-12h</span>
+                <span><i class="fa-solid fa-location-dot me-2"></i>18 Rue Gaston Darley, 77140 Nemours</span>
+                <span><i class="fa-regular fa-clock me-2"></i>Lun - Ven : 9h-12h / 14h-17h | Sam : 9h-12h</span>
             </div>
             <div>
-                <a href="tel:0987568180" class="fw-bold"><i class="fa-solid fa-phone me-2 text-success"></i>09 87 56 81 80</a>
+                <a href="tel:0987568180" class="fw-bold"><i class="fa-solid fa-phone me-2"></i>09 87 56 81 80</a>
             </div>
         </div>
     </div>
 
-    <!-- NAVBAR FLOTTANTE -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-premium sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-2 d-flex align-items-center" href="#">
+            <a class="navbar-brand fs-3 d-flex align-items-center" href="#">
                 <img src="images/a.jpeg" alt="Logo Eco Fenêtre" class="nav-logo">
-                <span class="brand-eco">ECO</span><span>FENÊTRE</span>
+                <span class="brand-oak">Eco</span>&nbsp;Fenêtre
             </a>
-            <div class="ms-auto d-flex align-items-center">
-                <button id="themeToggle" class="btn btn-link text-decoration-none me-3 fs-5" title="Basculer le thème">🌙</button>
-                <button class="btn btn-emerald fw-bold" data-bs-toggle="modal" data-bs-target="#contactModal">
-                    <i class="fa-regular fa-paper-plane me-2"></i>ME CONTACTER
+            <div class="ms-auto d-flex align-items-center gap-2">
+                <button id="themeToggle" class="btn-theme" title="Basculer le thème">🌙</button>
+                <button class="btn-primary-eco" data-bs-toggle="modal" data-bs-target="#contactModal">
+                    Me contacter
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION MODIFIÉE -->
-    <section class="hero-premium">
+    <!-- HERO -->
+    <section class="hero">
         <div class="container">
             <div class="row align-items-center g-5">
-                <div class="col-lg-7">
-                    <div class="badge-premium mb-4">
-                        <i class="fa-solid fa-award"></i> VOTRE ARTISAN DE PROXIMITÉ - NEMOURS
+                <div class="col-lg-6">
+                    <div class="hero-kicker">
+                        <span class="cross-mark"></span>
+                        Artisan menuisier certifié RGE — Nemours, 77
                     </div>
-                    <h1 class="display-4 fw-black mb-4" style="line-height: 1.15; letter-spacing: -1px;">
-                        MENUISERIE SUR-MESURE PAR <span class="brand-eco">ECO FENÊTRE</span>
-                    </h1>
-                    <p class="lead text-secondary mb-4 fs-5" style="line-height: 1.6;">
-                        L'expertise artisanale à Nemours pour la rénovation de vos fenêtres, volets et portes. Pose certifiée RGE & devis gratuit.
+                    <h1>Une menuiserie pensée pour votre maison, posée par des artisans d'ici</h1>
+                    <p class="hero-lead">
+                        Fenêtres, volets, portes et baies vitrées sur mesure, fabriqués en France et installés
+                        par une équipe certifiée RGE. Du premier rendez-vous à la pose, un seul interlocuteur
+                        suit votre projet.
                     </p>
                     <div class="d-flex flex-wrap gap-3">
-                        <button class="btn btn-emerald btn-lg px-4 py-3" data-bs-toggle="modal" data-bs-target="#contactModal">
-                            Obtenir mon devis gratuit sous 24h
+                        <button class="btn-primary-eco" data-bs-toggle="modal" data-bs-target="#contactModal">
+                            Demander mon devis gratuit
                         </button>
-                    </div>
-                </div>
-                
-                <div class="col-lg-5">
-                    <div class="card-showcase">
-
-                        <!-- BLOC AVIS GOOGLE D'EXCEPTION (AJOUTÉ JUSTE AU-DESSUS) -->
-                        <div class="google-review-badge d-flex align-items-center justify-content-between">
-                            <div>
-                                <div class="d-flex align-items-center gap-2 mb-1">
-                                    <i class="fa-brands fa-google text-primary fs-5"></i>
-                                    <span class="fw-bold fs-6">Avis Clients</span>
-                                    <div class="text-warning small ms-1">
-                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <p class="small text-secondary mb-0">Recommandé par nos clients</p>
-                            </div>
-                            <a href="https://maps.google.com/?q=Eco+Fenetre+Nemours" target="_blank" class="btn-google-action">
-                                <i class="fa-solid fa-pen-to-square"></i> Évaluer
-                            </a>
-                        </div>
-
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-success-subtle p-3 rounded-circle me-3 text-success">
-                                <i class="fa-solid fa-shield-halved fs-3"></i>
-                            </div>
-                            <div>
-                                <h4 class="fw-bold mb-0">Engagement Excellence</h4>
-                                <small class="text-secondary">Qualité & Sérénité pour vos travaux</small>
-                            </div>
-                        </div>
-                        <ul class="list-unstyled mb-4 d-flex flex-column gap-3 fs-6">
-                            <li class="d-flex align-items-center">
-                                <i class="fa-solid fa-circle-check text-success me-3"></i> Pose certifiée par nos équipes RGE
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <i class="fa-solid fa-circle-check text-success me-3"></i> Produits haute isolation thermique
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <i class="fa-solid fa-circle-check text-success me-3"></i> Respect strict des délais & chantier propre
-                            </li>
-                        </ul>
-                        <a href="tel:0987568180" class="btn btn-outline-success w-100 fw-bold py-3 rounded-pill text-uppercase" style="letter-spacing: 0.5px;">
-                            <i class="fa-solid fa-phone me-2"></i> Appeler un conseiller
+                        <a href="tel:0987568180" class="btn-outline-eco">
+                            <i class="fa-solid fa-phone me-2"></i>09 87 56 81 80
                         </a>
                     </div>
+                    <div class="hero-zone">
+                        <i class="fa-solid fa-location-dot"></i>
+                        Intervention à Nemours et dans tout le Sud Seine-et-Marne
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="hero-window-wrap">
+                        <div class="hero-window-frame">
+                            <div class="hero-scene"></div>
+                            <div class="mullion-v"></div>
+                            <div class="mullion-h"></div>
+                            <div class="shutter shutter-left"></div>
+                            <div class="shutter shutter-right"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION STATISTIQUES ET QUALIFICATIONS -->
+    <!-- STATS -->
+    <section class="stats-row">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-6 col-lg-3">
+                    <div class="stat-block">
+                        <div class="stat-img-wrapper">
+                            <span class="display-font" style="font-size:1.5rem; color: var(--sauge);">5+</span>
+                        </div>
+                        <div>
+                            <h3>Ans d'expérience</h3>
+                            <p>Auprès des habitants du secteur</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-block">
+                        <div class="stat-img-wrapper"><img src="images/b.jpeg" alt="Certification RGE"></div>
+                        <div>
+                            <h3>RGE</h3>
+                            <p>Artisan qualifié</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-block">
+                        <div class="stat-img-wrapper"><img src="images/c.jpeg" alt="Fabrication française"></div>
+                        <div>
+                            <h3>France</h3>
+                            <p>Fabrication des produits</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="stat-block">
+                        <div class="stat-img-wrapper"><img src="images/d.jpeg" alt="Devis gratuit"></div>
+                        <div>
+                            <h3>Gratuit</h3>
+                            <p>Devis sous 24h</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-6">
+                    <h2 class="display-font fs-1 mb-3">Nos savoir-faire</h2>
+                    <p class="text-muted-soft fs-6 mb-0" style="max-width: 42ch;">
+                        Chaque projet est mesuré, fabriqué et posé sur mesure — pas de catalogue standard,
+                        une menuiserie adaptée à votre maison.
+                    </p>
+                </div>
+            </div>
+            <div class="row services-grid g-0">
+                <div class="col-md-6 service-pane">
+                    <i class="fa-solid fa-vector-square"></i>
+                    <h3>Fenêtres</h3>
+                    <p>PVC, aluminium ou mixte bois-alu, à isolation thermique et phonique renforcée, sur mesure pour chaque ouverture.</p>
+                </div>
+                <div class="col-md-6 service-pane">
+                    <i class="fa-solid fa-blinds"></i>
+                    <h3>Volets</h3>
+                    <p>Volets battants, roulants ou coulissants, motorisés ou manuels, assortis à l'esthétique de votre façade.</p>
+                </div>
+                <div class="col-md-6 service-pane">
+                    <i class="fa-solid fa-door-closed"></i>
+                    <h3>Portes</h3>
+                    <p>Portes d'entrée sécurisées et portes de garage, alliant isolation, robustesse et finitions soignées.</p>
+                </div>
+                <div class="col-md-6 service-pane">
+                    <i class="fa-solid fa-table-cells-large"></i>
+                    <h3>Baies vitrées</h3>
+                    <p>Baies coulissantes ou galandage pour faire entrer la lumière et agrandir visuellement vos pièces à vivre.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process-section">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <h2 class="display-font fs-1 mb-3">Comment se déroule votre projet</h2>
+                    <p class="text-muted-soft fs-6">
+                        Quatre étapes, un seul interlocuteur du premier appel jusqu'à la pose.
+                    </p>
+                </div>
+                <div class="col-lg-8">
+                    <div class="process-step">
+                        <div class="process-num">01</div>
+                        <div>
+                            <h3>Prise de contact & devis gratuit</h3>
+                            <p>Vous nous décrivez votre projet, nous vous répondons sous 24h avec un premier chiffrage.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-num">02</div>
+                        <div>
+                            <h3>Prise de mesures à domicile</h3>
+                            <p>Un rendez-vous chez vous pour mesurer précisément chaque ouverture et affiner le devis.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-num">03</div>
+                        <div>
+                            <h3>Fabrication sur mesure</h3>
+                            <p>Vos menuiseries sont fabriquées en France selon les mesures prises chez vous.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-num">04</div>
+                        <div>
+                            <h3>Pose & suivi</h3>
+                            <p>Installation par notre équipe certifiée RGE, chantier propre, et suivi après la pose.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AVIS GOOGLE -->
     <section class="py-5">
         <div class="container">
+            <div class="review-strip">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="fa-brands fa-google fs-3" style="color: var(--oak);"></i>
+                    <div>
+                        <div class="review-stars mb-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="mb-0 fw-semibold">Recommandé par nos clients à Nemours</p>
+                    </div>
+                </div>
+                <a href="https://maps.google.com/?q=Eco+Fenetre+Nemours" target="_blank" class="btn-review">
+                    <i class="fa-solid fa-pen-to-square"></i> Laisser un avis
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUIVI DE CHANTIER -->
+    <section class="social-section">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-lg-7">
+                    <h2 class="display-font fs-1 mb-3">Nos chantiers en images</h2>
+                    <p class="text-muted-soft fs-6 mb-0">
+                        Retrouvez les photos avant / après de nos réalisations récentes sur nos réseaux sociaux.
+                    </p>
+                </div>
+            </div>
             <div class="row g-4">
-                <div class="col-6 col-lg-3">
-                    <div class="stat-card-premium">
-                        <h2 class="display-4 fw-black text-success mb-1">+5 ANS</h2>
-                        <p class="fw-bold text-uppercase small text-secondary mb-0">D'expertise locale</p>
-                    </div>
+                <div class="col-md-6">
+                    <a href="https://www.instagram.com/eco_fenetre77/" target="_blank" class="social-card">
+                        <i class="fa-brands fa-instagram icon-social"></i>
+                        <h3>@eco_fenetre77</h3>
+                        <p>Suivez nos poses de fenêtres, volets et baies vitrées au fil des chantiers.</p>
+                    </a>
                 </div>
-                <div class="col-6 col-lg-3">
-                    <div class="stat-card-premium">
-                        <div class="stat-img-wrapper">
-                            <img src="images/b.jpeg" alt="Certification RGE">
-                        </div>
-                        <h3 class="fw-bold h4 mb-1">RGE</h3>
-                        <p class="fw-bold text-uppercase small text-secondary mb-0">Artisan Qualifié</p>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3">
-                    <div class="stat-card-premium">
-                        <div class="stat-img-wrapper">
-                            <img src="images/c.jpeg" alt="Fabrication Française">
-                        </div>
-                        <h3 class="fw-bold h4 mb-1">FRANCE</h3>
-                        <p class="fw-bold text-uppercase small text-secondary mb-0">Fabrication</p>
-                    </div>
-                </div>
-                <div class="col-6 col-lg-3">
-                    <div class="stat-card-premium">
-                        <div class="stat-img-wrapper">
-                            <img src="images/d.jpeg" alt="Devis Gratuit">
-                        </div>
-                        <h3 class="fw-bold h4 mb-1 text-success">GRATUIT</h3>
-                        <p class="fw-bold text-uppercase small text-secondary mb-0">Devis sous 24h</p>
-                    </div>
+                <div class="col-md-6">
+                    <a href="https://www.facebook.com/profile.php?id=61590078922037" target="_blank" class="social-card">
+                        <i class="fa-brands fa-facebook icon-social"></i>
+                        <h3>Eco Fenêtre sur Facebook</h3>
+                        <p>Retours de chantiers, avis clients et actualités de l'entreprise.</p>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION PARTENAIRES -->
-    <section class="py-5">
-        <div class="container py-4">
+    <!-- PARTENAIRES -->
+    <section class="partners-section">
+        <div class="container">
             <div class="text-center mb-5">
-                <h2 class="fw-black fs-1 mb-2">NOS <span class="brand-eco">PARTENAIRES</span></h2>
-                <p class="text-secondary fs-6">Des fabricants majeurs pour une qualité sur-mesure irréprochable</p>
+                <h2 class="display-font fs-1 mb-2">Nos partenaires</h2>
+                <p class="text-muted-soft fs-6">Des fabricants reconnus pour une qualité sur-mesure irréprochable</p>
             </div>
             <div class="row g-3 justify-content-center">
                 <div class="col-6 col-md-4 col-lg-2">
-                    <a href="https://www.la-toulousaine.com/fr/" target="_blank" class="partner-card-premium">
+                    <a href="https://www.la-toulousaine.com/fr/" target="_blank" class="partner-tile">
                         <img src="images/toulousaine.jpeg" alt="La Toulousaine" class="partner-logo">
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-2">
-                    <a href="https://www.akraplast.fr/" target="_blank" class="partner-card-premium">
+                    <a href="https://www.akraplast.fr/" target="_blank" class="partner-tile">
                         <img src="images/akraplast.jpeg" alt="Akraplast" class="partner-logo">
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-2">
-                    <a href="https://volets-thiebaut.com/" target="_blank" class="partner-card-premium">
+                    <a href="https://volets-thiebaut.com/" target="_blank" class="partner-tile">
                         <img src="images/voletthiebaut.jpeg" alt="Thiebaut" class="partner-logo">
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-2">
-                    <a href="https://cloheac.fr/" target="_blank" class="partner-card-premium">
+                    <a href="https://cloheac.fr/" target="_blank" class="partner-tile">
                         <img src="images/cloheac.jpeg" alt="Cloheac" class="partner-logo">
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-2">
-                    <a href="https://www.belm.fr/" target="_blank" class="partner-card-premium">
+                    <a href="https://www.belm.fr/" target="_blank" class="partner-tile">
                         <img src="images/bel'm.jpeg" alt="Bel'M" class="partner-logo">
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-2">
-                    <a href="https://www.stores-marquises.fr/" target="_blank" class="partner-card-premium">
+                    <a href="https://www.stores-marquises.fr/" target="_blank" class="partner-tile">
                         <img src="images/marquises.jpeg" alt="Marquises" class="partner-logo">
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-2">
-                    <a href="https://groupe-millet.com/" target="_blank" class="partner-card-premium">
+                    <a href="https://groupe-millet.com/" target="_blank" class="partner-tile">
                         <img src="images/millet.jpeg" alt="Millet" class="partner-logo">
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-2">
-                    <a href="https://ksm-production.com/" target="_blank" class="partner-card-premium">
+                    <a href="https://ksm-production.com/" target="_blank" class="partner-tile">
                         <img src="images/ksm.jpeg" alt="KSM" class="partner-logo">
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-2">
-                    <a href="https://www.bubendorff.com/" target="_blank" class="partner-card-premium">
+                    <a href="https://www.bubendorff.com/" target="_blank" class="partner-tile">
                         <img src="images/bubendorff.jpeg" alt="Bubendorff" class="partner-logo">
                     </a>
                 </div>
                 <div class="col-6 col-md-4 col-lg-2">
-                    <a href="https://www.simpproduction.fr/" target="_blank" class="partner-card-premium">
+                    <a href="https://www.simpproduction.fr/" target="_blank" class="partner-tile">
                         <img src="images/simp.jpeg" alt="Simp Production" class="partner-logo">
                     </a>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta-final">
+        <div class="container container-narrow">
+            <h2 class="display-font">Un projet de rénovation en tête ?</h2>
+            <p>Décrivez-nous vos fenêtres, volets ou portes à changer — nous revenons vers vous sous 24h avec un premier devis gratuit.</p>
+            <button class="btn-primary-eco" data-bs-toggle="modal" data-bs-target="#contactModal">
+                Obtenir mon devis gratuit
+            </button>
         </div>
     </section>
 
@@ -542,59 +770,58 @@
             <div class="row align-items-center gy-4">
                 <div class="col-md-4 text-center text-md-start">
                     <div class="d-flex align-items-center justify-content-center justify-content-md-start">
-                        <img src="images/a.jpeg" alt="Logo" class="nav-logo">
-                        <span class="fw-bold fs-3 brand-font"><span class="brand-eco">ECO</span>FENÊTRE</span>
+                        <img src="images/a.jpeg" alt="Logo Eco Fenêtre" class="nav-logo">
+                        <span class="display-font fs-4"><span class="brand-oak">Eco</span> Fenêtre</span>
                     </div>
                 </div>
                 <div class="col-md-4 text-center">
-                    <p class="small text-secondary mb-0">Excellence et Performance à Nemours depuis plus de 5 ans.</p>
+                    <p class="small text-muted-soft mb-0">Menuiserie artisanale à Nemours, Seine-et-Marne, depuis plus de 5 ans.</p>
                 </div>
                 <div class="col-md-4 text-center text-md-end">
                     <div class="d-flex justify-content-center justify-content-md-end gap-3">
-                        <a href="https://www.instagram.com/eco_fenetre77/" target="_blank" class="btn btn-outline-success btn-sm rounded-circle d-inline-flex align-items-center justify-content-center" style="width:42px; height:42px;">
-                            <i class="fa-brands fa-instagram fs-5"></i>
+                        <a href="https://www.instagram.com/eco_fenetre77/" target="_blank" class="footer-social">
+                            <i class="fa-brands fa-instagram"></i>
                         </a>
-                        <a href="https://www.facebook.com/profile.php?id=61590078922037" target="_blank" class="btn btn-outline-success btn-sm rounded-circle d-inline-flex align-items-center justify-content-center" style="width:42px; height:42px;">
-                            <i class="fa-brands fa-facebook-f fs-5"></i>
+                        <a href="https://www.facebook.com/profile.php?id=61590078922037" target="_blank" class="footer-social">
+                            <i class="fa-brands fa-facebook-f"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="mt-5 pt-4 border-top text-center">
-                <p class="small text-secondary mb-0">© 2026 Eco Fenêtre — 18 Rue Gaston Darley, 77140 Nemours</p>
-            </div>
+            <hr class="section-divider mt-5 mb-4">
+            <p class="small text-muted-soft text-center mb-0">© 2026 Eco Fenêtre — 18 Rue Gaston Darley, 77140 Nemours</p>
         </div>
     </footer>
 
-    <!-- MODAL CONTACT PREMIUM -->
+    <!-- MODALE CONTACT -->
     <div class="modal fade" id="contactModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg rounded-4 p-4 text-center">
-                <h2 class="fw-bold mb-4 brand-eco"><i class="fa-regular fa-envelope me-2"></i>CONTACTEZ-NOUS</h2>
-                
-                <a href="https://www.google.com/maps/search/?api=1&query=18+Rue+Gaston+Darley+77140+Nemours" target="_blank" class="contact-premium-card">
-                    <p class="mb-1 fw-semibold"><i class="fa-solid fa-map-pin text-danger me-2"></i>18 Rue Gaston Darley, 77140 Nemours</p>
-                    <small class="text-success fw-bold">Ouvrir dans Google Maps</small>
+            <div class="modal-content modal-content-eco text-center p-4">
+                <h2 class="display-font mb-4"><span class="brand-oak">Contactez</span>-nous</h2>
+
+                <a href="https://www.google.com/maps/search/?api=1&query=18+Rue+Gaston+Darley+77140+Nemours" target="_blank" class="contact-line">
+                    <p class="mb-1 fw-semibold"><i class="fa-solid fa-map-pin me-2"></i>18 Rue Gaston Darley, 77140 Nemours</p>
+                    <small class="text-muted-soft">Ouvrir dans Google Maps</small>
                 </a>
 
-                <a href="tel:0987568180" class="contact-premium-card">
-                    <p class="fw-bold fs-4 mb-1"><i class="fa-solid fa-phone text-success me-2"></i>09 87 56 81 80</p>
-                    <small class="text-success fw-bold">Cliquer pour appeler</small>
+                <a href="tel:0987568180" class="contact-line">
+                    <p class="fw-bold fs-4 mb-1"><i class="fa-solid fa-phone me-2"></i>09 87 56 81 80</p>
+                    <small class="text-muted-soft">Cliquer pour appeler</small>
                 </a>
 
-                <a href="mailto:ecofenetre45@gmail.com" class="contact-premium-card">
-                    <p class="mb-1 fw-semibold"><i class="fa-regular fa-envelope text-primary me-2"></i>ecofenetre45@gmail.com</p>
-                    <small class="text-success fw-bold">Envoyer un mail</small>
+                <a href="mailto:ecofenetre45@gmail.com" class="contact-line">
+                    <p class="mb-1 fw-semibold"><i class="fa-regular fa-envelope me-2"></i>ecofenetre45@gmail.com</p>
+                    <small class="text-muted-soft">Envoyer un mail</small>
                 </a>
 
                 <div class="mt-3 text-center">
-                    <p class="fw-bold mb-1"><i class="fa-regular fa-clock me-2"></i>Horaires d'ouverture :</p>
-                    <p class="small text-secondary mb-0">
-                        Lundi au Vendredi : 9h-12h / 14h-17h<br>
+                    <p class="fw-bold mb-1"><i class="fa-regular fa-clock me-2"></i>Horaires d'ouverture</p>
+                    <p class="small text-muted-soft mb-0">
+                        Lundi au vendredi : 9h-12h / 14h-17h<br>
                         Samedi : 9h-12h
                     </p>
                 </div>
-                <button class="btn btn-emerald w-100 mt-4 py-3" data-bs-dismiss="modal">RETOUR AU SITE</button>
+                <button class="btn-outline-eco w-100 mt-4" data-bs-dismiss="modal">Retour au site</button>
             </div>
         </div>
     </div>
@@ -604,7 +831,7 @@
     <script>
         const btn = document.getElementById('themeToggle');
         const html = document.documentElement;
-        
+
         btn.addEventListener('click', () => {
             const isDark = html.getAttribute('data-bs-theme') === 'dark';
             html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
