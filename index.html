@@ -14,6 +14,8 @@
 
     <link rel="icon" type="image/png" href="images/favicon.jpeg">
 
+    <script>document.documentElement.classList.add('js');</script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -75,6 +77,8 @@
         .cross-mark::before { top: 50%; left: 0; right: 0; height: 2px; transform: translateY(-50%); }
         .cross-mark::after { left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-50%); }
 
+        :focus-visible { outline: 2px solid var(--sauge); outline-offset: 3px; }
+
         /* ============ FOND ANIME ============ */
         .bg-blob {
             position: fixed;
@@ -83,12 +87,14 @@
             opacity: 0.28;
             z-index: -1;
             animation: floatBlob 20s ease-in-out infinite alternate;
+            will-change: transform;
         }
         [data-bs-theme="dark"] .bg-blob { opacity: 0.16; }
         .bg-blob-1 { width: 360px; height: 360px; background: var(--vivid-a); top: -100px; left: -110px; }
         .bg-blob-2 { width: 420px; height: 420px; background: var(--vivid-b); bottom: -150px; right: -130px; animation-duration: 24s; }
         .bg-blob-3 { width: 280px; height: 280px; background: var(--oak); top: 45%; left: 60%; animation-duration: 28s; opacity: 0.16; }
         @keyframes floatBlob { from { transform: translate(0,0) scale(1); } to { transform: translate(45px,-35px) scale(1.1); } }
+        @media (max-width: 991px) { .bg-blob { filter: blur(60px); } }
         @media (prefers-reduced-motion: reduce) { .bg-blob { animation: none; } }
 
         /* ============ TOP BAR ============ */
@@ -130,7 +136,7 @@
             background: var(--vivid-gradient);
             color: #05261c; font-weight: 700; border: none; border-radius: 50px;
             padding: 14px 28px;
-            box-shadow: 0 12px 28px -10px rgba(22, 196, 127, 0.55);
+            box-shadow: 0 12px 28px -10px rgba(22, 196, 127, 0.55), inset 0 1.5px 0 rgba(255,255,255,0.45);
             transition: transform 0.22s ease, box-shadow 0.22s ease;
         }
         .btn-primary-eco::before {
@@ -138,7 +144,7 @@
             background: linear-gradient(120deg, transparent, rgba(255,255,255,0.65), transparent);
             transform: skewX(-20deg); transition: left 0.65s ease;
         }
-        .btn-primary-eco:hover { transform: translateY(-2px); box-shadow: 0 16px 34px -8px rgba(22, 196, 127, 0.65); }
+        .btn-primary-eco:hover { transform: translateY(-2px); box-shadow: 0 16px 34px -8px rgba(22, 196, 127, 0.65), inset 0 1.5px 0 rgba(255,255,255,0.45); }
         .btn-primary-eco:hover::before { left: 130%; }
         .btn-primary-eco:active { transform: scale(0.96); }
 
@@ -149,6 +155,26 @@
         }
         .btn-outline-eco:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px); }
         .btn-outline-eco:active { transform: scale(0.96); }
+        .btn-sm-eco { padding: 10px 18px; font-size: 0.88rem; }
+
+        /* ============ BOUTON APPEL FLOTTANT (mobile) ============ */
+        .fab-call {
+            position: fixed; right: 16px; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); z-index: 1040;
+            width: 56px; height: 56px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--vivid-gradient); color: #05261c; font-size: 1.25rem; text-decoration: none;
+            box-shadow: 0 14px 26px -8px rgba(22, 196, 127, 0.7), inset 0 2px 0 rgba(255,255,255,0.5), inset 0 -6px 10px rgba(0,60,40,0.18);
+            transition: transform .2s ease;
+        }
+        .fab-call:active { transform: scale(0.92); }
+        .fab-call::after {
+            content: ""; position: absolute; inset: 0; border-radius: 50%;
+            border: 2px solid var(--vivid-a); animation: fabPulse 2.8s ease-out infinite;
+        }
+        @keyframes fabPulse { 0% { transform: scale(1); opacity: .8; } 70%, 100% { transform: scale(1.6); opacity: 0; } }
+        body[data-tab="contact"] .fab-call { display: none; }
+        @media (min-width: 992px) { .fab-call { display: none; } }
+        @media (prefers-reduced-motion: reduce) { .fab-call::after { animation: none; opacity: 0; } }
 
         /* ============ TAB BAR ============ */
         .tab-bar {
@@ -176,7 +202,7 @@
         .tab-btn.active { color: var(--ink); }
         .tab-btn.active .tab-icon-wrap {
             background: var(--vivid-gradient); color: #05261c;
-            box-shadow: 0 8px 16px -6px rgba(22, 196, 127, 0.6);
+            box-shadow: 0 8px 16px -6px rgba(22, 196, 127, 0.6), inset 0 1.5px 0 rgba(255,255,255,0.45);
             transform: translateY(-3px);
         }
         .tab-label { transition: color 0.25s ease; }
@@ -200,6 +226,14 @@
         @keyframes panelIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         @media (prefers-reduced-motion: reduce) { .tab-panel.active { animation: none; } }
 
+        /* ============ APPARITION PROGRESSIVE (services + étapes) ============ */
+        .js .reveal {
+            opacity: 0; transform: perspective(900px) translateY(24px) rotateX(8deg);
+            transition: opacity .7s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+        }
+        .js .reveal.in { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1; transform: none; transition: none; } }
+
         /* ============ HERO ============ */
         .hero { padding: 44px 0 40px; }
         .hero-kicker { display: flex; align-items: center; gap: 10px; color: var(--sauge); font-weight: 600; font-size: 0.92rem; margin-bottom: 20px; }
@@ -209,10 +243,53 @@
         .hero-zone { display: flex; align-items: center; gap: 10px; margin-top: 24px; font-size: 0.9rem; color: var(--ink-soft); }
         .hero-zone i { color: var(--oak); }
 
-        .hero-window-wrap { perspective: 1400px; margin-top: 8px; }
+        /* Scène 3D de la fenêtre */
+        .hero-window-wrap { margin-top: 8px; }
+        .stage-box {
+            position: relative; aspect-ratio: 4/5; max-height: 620px; margin: 0 auto; border-radius: 22px;
+            background: radial-gradient(circle at 50% 46%, rgba(34,180,207,0.22), rgba(22,196,127,0.08) 48%, transparent 72%);
+        }
+        .stage-canvas { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; z-index: 2; }
+        .stage-canvas canvas { display: block; width: 100%; height: 100%; cursor: grab; }
+        .stage-canvas canvas:active { cursor: grabbing; }
+        .has-3d .stage-canvas { opacity: 1; }
+        .has-3d .hero-window-frame.fallback { opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility 0s .6s; }
+
+        .float-badge {
+            position: absolute; z-index: 3; pointer-events: none;
+            display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 40px;
+            background: rgba(247, 243, 236, 0.84); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--line); box-shadow: var(--shadow);
+            font-size: 0.78rem; font-weight: 600; color: var(--ink);
+            animation: floaty 6s ease-in-out infinite alternate;
+        }
+        [data-bs-theme="dark"] .float-badge { background: rgba(20, 24, 19, 0.8); }
+        .float-badge i { color: var(--sauge); }
+        [data-bs-theme="dark"] .float-badge i { color: var(--vivid-a); }
+        .fb-1 { top: 12px; left: 10px; }
+        .fb-2 { bottom: 12px; right: 10px; animation-delay: -3s; }
+        @keyframes floaty { from { transform: translateY(0); } to { transform: translateY(-7px); } }
+        @media (prefers-reduced-motion: reduce) { .float-badge { animation: none; } }
+
+        .stage-hint { text-align: center; font-size: 0.82rem; color: var(--ink-soft); margin: 12px 0 0; }
+        .stage-ui { margin-top: 14px; display: flex; flex-direction: column; gap: 14px; }
+        .finish-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+        .finish-label { font-size: 0.9rem; color: var(--ink-soft); }
+        .finish-label strong { color: var(--ink); font-weight: 600; }
+        .swatches { display: flex; gap: 12px; }
+        .sw {
+            width: 36px; height: 36px; border-radius: 50%; background: var(--c); border: 2px solid var(--line); padding: 0;
+            box-shadow: inset 0 2px 3px rgba(255,255,255,0.35), inset 0 -4px 6px rgba(0,0,0,0.18);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .sw[aria-pressed="true"] { transform: scale(1.1); box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--sauge), inset 0 2px 3px rgba(255,255,255,0.35), inset 0 -4px 6px rgba(0,0,0,0.18); }
+        .stage-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .stage-actions .btn-sm-eco { flex: 1 1 150px; }
+
+        /* Version de secours (sans 3D) : la fenêtre CSS d'origine */
         .hero-window-frame {
-            position: relative; width: 100%; aspect-ratio: 4/5; border-radius: 8px; overflow: hidden;
-            border: 12px solid var(--ink); box-shadow: var(--shadow);
+            position: absolute; inset: 0; width: 100%; border-radius: 8px; overflow: hidden;
+            border: 12px solid var(--ink); box-shadow: var(--shadow); perspective: 1400px;
         }
         .hero-scene {
             position: absolute; inset: 0;
@@ -225,6 +302,7 @@
             background: var(--sauge); opacity: 0.85;
             clip-path: polygon(0% 60%, 18% 30%, 34% 55%, 52% 20%, 68% 48%, 86% 15%, 100% 42%, 100% 100%, 0% 100%);
         }
+        .hero-scene.painted::before { display: none; }
         .hero-shine {
             position: absolute; top: 0; bottom: 0; width: 35%; z-index: 7; pointer-events: none;
             background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent);
@@ -251,18 +329,58 @@
 
         /* ============ STATS ============ */
         .stats-row { padding: 26px 0 10px; }
-        .stat-block { display: flex; align-items: center; gap: 14px; padding: 16px 4px; border-radius: 12px; transition: background .25s ease; }
-        .stat-block:hover { background: var(--paper-soft); }
+        .stat-block {
+            display: flex; align-items: center; gap: 14px; padding: 16px; height: 100%;
+            border-radius: 18px; background: var(--paper); border: 1px solid var(--line);
+            box-shadow: 0 12px 26px -20px rgba(27, 36, 32, 0.5); transition: border-color .25s ease;
+        }
+        .stat-block:hover { border-color: var(--oak); }
         .stat-img-wrapper { width: 42px; height: 42px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
         .stat-img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .stat-block h3 { font-size: 1.2rem; margin: 0; font-weight: 600; }
         .stat-block p { margin: 0; font-size: 0.84rem; color: var(--ink-soft); }
 
+        /* ============ AVANT / APRES ============ */
+        .compare { margin-top: 44px; }
+        .compare h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 8px; }
+        .compare > p { color: var(--ink-soft); max-width: 50ch; margin-bottom: 20px; }
+        .cmp-box {
+            position: relative; aspect-ratio: 4/3; border-radius: 22px; overflow: hidden; touch-action: pan-y;
+            cursor: ew-resize; user-select: none; -webkit-user-select: none; box-shadow: var(--shadow);
+        }
+        @media (min-width: 768px) { .cmp-box { aspect-ratio: 16/8; } }
+        .cmp-layer { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+        .cmp-after { background: radial-gradient(circle at 78% 22%, #FFF0B8, transparent 48%), #F6E3B8; color: #B9814E; --gf: #FFF6D8; }
+        .cmp-before { background: radial-gradient(circle at 78% 22%, #C4D3D8, transparent 48%), #9DB0B8; color: #56656B; --gf: #C9D8DD; }
+        .cmp-win { height: 88%; width: auto; overflow: visible; pointer-events: none; }
+        .cmp-tag {
+            position: absolute; top: 12px; padding: 5px 13px; border-radius: 30px; font-size: 0.78rem; font-weight: 700;
+            background: rgba(255,255,255,0.8); color: #1B2420; pointer-events: none;
+        }
+        .cmp-before .cmp-tag { left: 12px; }
+        .cmp-after .cmp-tag { right: 12px; }
+        .wind { stroke-dasharray: 70 220; animation: windMove 2.8s linear infinite; }
+        .wind.w2 { animation-delay: -1s; } .wind.w3 { animation-delay: -1.9s; }
+        @keyframes windMove { from { stroke-dashoffset: 290; } to { stroke-dashoffset: 0; } }
+        .sunpatch { animation: pulseLight 4s ease-in-out infinite alternate; }
+        @keyframes pulseLight { from { opacity: .35; } to { opacity: .75; } }
+        @media (prefers-reduced-motion: reduce) { .wind, .sunpatch { animation: none; } }
+        .cmp-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #fff; transform: translateX(-1px); pointer-events: none; }
+        .cmp-handle span {
+            position: absolute; top: 50%; left: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%;
+            background: #fff; color: #05261c; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 20px -6px rgba(0,0,0,0.45);
+        }
+        .cmp-captions { display: flex; justify-content: space-between; gap: 16px; margin-top: 14px; }
+        .cmp-captions div { flex: 1; font-size: 0.86rem; color: var(--ink-soft); line-height: 1.45; }
+        .cmp-captions strong { display: block; color: var(--ink); font-size: 0.95rem; }
+        .cmp-captions div:last-child { text-align: right; }
+
         /* ============ AVIS GOOGLE ============ */
         .review-strip {
             display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
             padding: 24px 28px; border: 1px solid var(--line); border-radius: 16px; background: var(--paper);
-            margin-top: 20px;
+            margin-top: 28px;
         }
         .review-stars i { color: var(--oak); font-size: 0.9rem; }
         .btn-review {
@@ -279,24 +397,53 @@
         .panel-heading h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); margin-bottom: 10px; }
         .panel-heading p { color: var(--ink-soft); max-width: 46ch; margin: 0; }
 
-        /* ============ SERVICES ============ */
-        .services-grid { border-top: 1px solid var(--line); border-left: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-        .service-pane { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 32px 28px; transition: background 0.25s ease; }
-        .service-pane:hover { background: var(--paper-soft); }
-        .service-pane i {
-            font-size: 1.3rem; color: #05261c; margin-bottom: 16px;
-            width: 46px; height: 46px; display: flex; align-items: center; justify-content: center;
-            border-radius: 12px; background: var(--vivid-gradient);
+        /* ============ SERVICES (cartes en relief) ============ */
+        .svc { position: relative; }
+        .svc::before {
+            content: ""; position: absolute; inset: 10px -8px -10px 8px; border-radius: 22px;
+            background: var(--paper-soft); border: 1px solid var(--line);
         }
-        .service-pane h3 { font-size: 1.18rem; font-weight: 600; margin-bottom: 8px; }
-        .service-pane p { color: var(--ink-soft); font-size: 0.93rem; line-height: 1.6; margin: 0; }
+        .svc-card {
+            position: relative; height: 100%; padding: 26px 24px; border-radius: 22px;
+            background: var(--paper); border: 1px solid var(--line); box-shadow: var(--shadow);
+            transition: transform .2s ease;
+        }
+        .svc-card:active { transform: translate(2px, 2px); }
+        .svc-tile {
+            width: 60px; height: 60px; border-radius: 18px; margin-bottom: 18px;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--vivid-gradient); color: #05261c;
+            box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.6), inset 0 -8px 14px rgba(0,60,40,0.16), 0 12px 20px -10px rgba(22,196,127,0.7);
+        }
+        .svc-tile svg { width: 32px; height: 32px; }
+        .svc-card h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
+        .svc-card p { color: var(--ink-soft); font-size: 0.94rem; line-height: 1.6; margin: 0; }
 
-        /* ============ ETAPES ============ */
-        .process-step { display: flex; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--line); }
-        .process-step:last-child { border-bottom: none; }
-        .process-num { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--oak); flex-shrink: 0; width: 44px; }
-        .process-step h3 { font-size: 1.08rem; font-weight: 600; margin-bottom: 5px; }
+        /* ============ ETAPES (frise) ============ */
+        .process-step { position: relative; display: flex; gap: 18px; padding: 0 0 32px; }
+        .process-step:last-child { padding-bottom: 0; }
+        .process-num {
+            position: relative; z-index: 1; width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--oak);
+            background: var(--paper); border: 2px solid var(--oak);
+            transition: background .5s ease .2s, color .5s ease .2s, border-color .5s ease .2s, transform .7s cubic-bezier(.3,1.7,.5,1) .2s;
+        }
+        .process-step::before {
+            content: ""; position: absolute; left: 22px; top: 46px; bottom: 0; width: 2px;
+            background: linear-gradient(var(--oak), var(--line));
+            transform: scaleY(0); transform-origin: top; transition: transform .8s ease .35s;
+        }
+        .process-step:last-child::before { display: none; }
+        .js .process-step:not(.in) .process-num { transform: scale(.7); }
+        .process-step.in::before { transform: scaleY(1); }
+        .process-step.in .process-num {
+            background: var(--vivid-gradient); border-color: transparent; color: #05261c;
+            box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.5), 0 10px 18px -8px rgba(22,196,127,0.6);
+        }
+        .process-step h3 { font-size: 1.08rem; font-weight: 600; margin: 8px 0 5px; }
         .process-step p { color: var(--ink-soft); margin: 0; font-size: 0.92rem; line-height: 1.55; }
+        @media (prefers-reduced-motion: reduce) { .process-step::before { transition: none; transform: scaleY(1); } }
 
         /* ============ RESEAUX + PARTENAIRES ============ */
         .social-card {
@@ -308,6 +455,7 @@
         .social-card i.icon-social {
             font-size: 1.4rem; margin-bottom: 14px; width: 46px; height: 46px; display: flex;
             align-items: center; justify-content: center; border-radius: 12px; background: var(--vivid-gradient); color: #05261c;
+            box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.5), inset 0 -6px 10px rgba(0,60,40,0.14);
         }
         .social-card h3 { font-size: 1.08rem; font-weight: 600; margin-bottom: 6px; }
         .social-card p { color: var(--ink-soft); font-size: 0.9rem; margin: 0; }
@@ -324,10 +472,15 @@
         .contact-banner {
             background: var(--vivid-gradient); color: #05261c; border-radius: 18px;
             padding: 26px 28px; margin-bottom: 28px; display: flex; align-items: center; gap: 16px;
+            box-shadow: 0 18px 34px -18px rgba(22,196,127,0.7), inset 0 1.5px 0 rgba(255,255,255,0.45);
         }
         .contact-banner i { font-size: 1.6rem; }
         .contact-banner h3 { margin: 0 0 2px; font-size: 1.15rem; font-weight: 700; }
         .contact-banner p { margin: 0; font-size: 0.88rem; opacity: 0.85; }
+        .finish-note {
+            border: 1.5px solid var(--sauge); border-radius: 14px; padding: 14px 18px; margin: -10px 0 20px;
+            font-size: 0.92rem; background: var(--paper-soft);
+        }
 
         .contact-line {
             border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 12px;
@@ -357,12 +510,22 @@
         .footer-social:hover { border-color: var(--oak); color: var(--oak); transform: translateY(-2px); }
 
         @media (max-width: 991px) {
-            .service-pane { padding: 26px 22px; }
             .panel-section { padding: 32px 0 44px; }
+            .hero { padding: 32px 0 32px; }
         }
     </style>
 </head>
 <body>
+
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <defs>
+            <symbol id="winSym" viewBox="0 0 200 240">
+                <rect x="40" y="24" width="120" height="190" rx="6" style="fill: var(--gf)" stroke="currentColor" stroke-width="10"/>
+                <path d="M100 24v190M40 112h120" stroke="currentColor" stroke-width="7"/>
+                <rect x="26" y="214" width="148" height="12" rx="4" fill="currentColor"/>
+            </symbol>
+        </defs>
+    </svg>
 
     <div class="bg-blob bg-blob-1"></div>
     <div class="bg-blob bg-blob-2"></div>
@@ -414,6 +577,8 @@
         </button>
     </nav>
 
+    <a href="tel:0987568180" class="fab-call" aria-label="Appeler Eco Fenêtre au 09 87 56 81 80"><i class="fa-solid fa-phone"></i></a>
+
     <main class="tab-content">
 
         <!-- ACCUEIL -->
@@ -432,14 +597,35 @@
                             <div class="hero-zone"><i class="fa-solid fa-location-dot"></i>Intervention à Nemours et dans tout le Sud Seine-et-Marne</div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="hero-window-wrap">
-                                <div class="hero-window-frame">
-                                    <div class="hero-scene"></div>
-                                    <div class="mullion-v"></div>
-                                    <div class="mullion-h"></div>
-                                    <div class="shutter shutter-left"></div>
-                                    <div class="shutter shutter-right"></div>
-                                    <div class="hero-shine"></div>
+                            <div class="hero-window-wrap" id="stage3d">
+                                <div class="stage-box">
+                                    <div class="hero-window-frame fallback">
+                                        <div class="hero-scene"></div>
+                                        <div class="mullion-v"></div>
+                                        <div class="mullion-h"></div>
+                                        <div class="shutter shutter-left"></div>
+                                        <div class="shutter shutter-right"></div>
+                                        <div class="hero-shine"></div>
+                                    </div>
+                                    <div class="stage-canvas"></div>
+                                    <span class="float-badge fb-1"><i class="fa-solid fa-shield-halved"></i>Certifié RGE</span>
+                                    <span class="float-badge fb-2"><i class="fa-solid fa-flag"></i>Fabriqué en France</span>
+                                </div>
+                                <p class="stage-hint" id="stageHint" hidden>Faites glisser pour tourner la fenêtre, touchez-la pour l'ouvrir.</p>
+                                <div class="stage-ui" id="stageUI" hidden>
+                                    <div class="finish-row">
+                                        <span class="finish-label">Finition : <strong id="finishName">Blanc</strong></span>
+                                        <div class="swatches" role="group" aria-label="Couleur du cadre">
+                                            <button type="button" class="sw" data-finish="blanc" style="--c:#EDEBE5" aria-label="Blanc" aria-pressed="true"></button>
+                                            <button type="button" class="sw" data-finish="anthracite" style="--c:#3A3F43" aria-label="Anthracite" aria-pressed="false"></button>
+                                            <button type="button" class="sw" data-finish="chene" style="--c:#B9814E" aria-label="Chêne doré" aria-pressed="false"></button>
+                                            <button type="button" class="sw" data-finish="sauge" style="--c:#3F5D4E" aria-label="Vert sauge" aria-pressed="false"></button>
+                                        </div>
+                                    </div>
+                                    <div class="stage-actions">
+                                        <button type="button" class="btn-outline-eco btn-sm-eco" id="toggleSash"><i class="fa-solid fa-door-open me-2"></i><span>Ouvrir la fenêtre</span></button>
+                                        <button type="button" class="btn-primary-eco btn-sm-eco" id="finishQuote">Devis avec cette finition</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -449,7 +635,7 @@
 
             <section class="stats-row">
                 <div class="container">
-                    <div class="row g-2">
+                    <div class="row g-3">
                         <div class="col-6 col-lg-3">
                             <div class="stat-block">
                                 <div class="stat-img-wrapper"><span class="display-font" style="font-size:1.4rem; color: var(--sauge);">5+</span></div>
@@ -476,6 +662,41 @@
                         </div>
                     </div>
 
+                    <div class="compare">
+                        <h2 class="display-font">Sentez la différence</h2>
+                        <p>Faites glisser pour comparer une ancienne fenêtre et une pose Eco Fenêtre.</p>
+                        <div class="cmp-box" id="cmpBox" role="slider" tabindex="0" aria-label="Comparer avant et après la pose" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+                            <div class="cmp-layer cmp-after">
+                                <svg class="cmp-win" viewBox="0 0 200 240" aria-hidden="true">
+                                    <circle cx="170" cy="40" r="26" fill="#FFE29A"/>
+                                    <polygon class="sunpatch" points="52,226 148,226 196,238 8,238" fill="#FFF1B8"/>
+                                    <use href="#winSym" width="200" height="240"/>
+                                </svg>
+                                <span class="cmp-tag">Après</span>
+                            </div>
+                            <div class="cmp-layer cmp-before" id="cmpBefore">
+                                <svg class="cmp-win" viewBox="0 0 200 240" aria-hidden="true">
+                                    <g fill="none" stroke="#E6EEF1" stroke-width="3" stroke-linecap="round" opacity=".9">
+                                        <path class="wind w1" d="M-60 70 C-30 58 -10 82 20 70 S60 58 90 70"/>
+                                        <path class="wind w2" d="M210 150 C235 138 255 162 285 150 S320 138 345 150"/>
+                                        <path class="wind w3" d="M-70 190 C-40 178 -20 202 10 190"/>
+                                    </g>
+                                    <use href="#winSym" width="200" height="240"/>
+                                    <g fill="#E6EEF1" opacity=".8">
+                                        <circle cx="64" cy="168" r="3"/><circle cx="82" cy="190" r="2.4"/>
+                                        <circle cx="128" cy="176" r="3.2"/><circle cx="140" cy="198" r="2.2"/>
+                                    </g>
+                                </svg>
+                                <span class="cmp-tag">Avant</span>
+                            </div>
+                            <div class="cmp-handle" id="cmpHandle"><span><i class="fa-solid fa-arrows-left-right"></i></span></div>
+                        </div>
+                        <div class="cmp-captions">
+                            <div><strong>Ancienne fenêtre</strong>Courants d'air, bruit de la rue, condensation.</div>
+                            <div><strong>Pose Eco Fenêtre</strong>Isolation thermique et phonique renforcée.</div>
+                        </div>
+                    </div>
+
                     <div class="review-strip">
                         <div class="d-flex align-items-center gap-3">
                             <i class="fa-brands fa-google fs-3" style="color: var(--oak);"></i>
@@ -497,26 +718,34 @@
                     <h2 class="display-font">Nos savoir-faire</h2>
                     <p>Chaque projet est mesuré, fabriqué et posé sur mesure — pas de catalogue standard, une menuiserie adaptée à votre maison.</p>
                 </div>
-                <div class="row services-grid g-0">
-                    <div class="col-md-6 service-pane">
-                        <i class="fa-solid fa-vector-square"></i>
-                        <h3>Fenêtres</h3>
-                        <p>PVC, aluminium ou mixte bois-alu, à isolation thermique et phonique renforcée, sur mesure pour chaque ouverture.</p>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="svc reveal"><article class="svc-card">
+                            <span class="svc-tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="6" width="28" height="34" rx="2"/><path d="M24 6v34M10 23h28"/><path d="M6 43h36"/></svg></span>
+                            <h3>Fenêtres</h3>
+                            <p>PVC, aluminium ou mixte bois-alu, à isolation thermique et phonique renforcée, sur mesure pour chaque ouverture.</p>
+                        </article></div>
                     </div>
-                    <div class="col-md-6 service-pane">
-                        <i class="fa-solid fa-blinds"></i>
-                        <h3>Volets</h3>
-                        <p>Volets battants, roulants ou coulissants, motorisés ou manuels, assortis à l'esthétique de votre façade.</p>
+                    <div class="col-md-6">
+                        <div class="svc reveal" style="transition-delay:.08s"><article class="svc-card">
+                            <span class="svc-tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="6" width="32" height="36" rx="2"/><path d="M8 14h32M8 22h32M8 30h32M8 38h32"/></svg></span>
+                            <h3>Volets</h3>
+                            <p>Volets battants, roulants ou coulissants, motorisés ou manuels, assortis à l'esthétique de votre façade.</p>
+                        </article></div>
                     </div>
-                    <div class="col-md-6 service-pane">
-                        <i class="fa-solid fa-door-closed"></i>
-                        <h3>Portes</h3>
-                        <p>Portes d'entrée sécurisées et portes de garage, alliant isolation, robustesse et finitions soignées.</p>
+                    <div class="col-md-6">
+                        <div class="svc reveal" style="transition-delay:.08s"><article class="svc-card">
+                            <span class="svc-tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="13" y="5" width="22" height="38" rx="2"/><rect x="18" y="10" width="12" height="11" rx="1"/><rect x="18" y="26" width="12" height="11" rx="1"/><circle cx="31" cy="23.5" r="1.4" fill="currentColor"/></svg></span>
+                            <h3>Portes</h3>
+                            <p>Portes d'entrée sécurisées et portes de garage, alliant isolation, robustesse et finitions soignées.</p>
+                        </article></div>
                     </div>
-                    <div class="col-md-6 service-pane">
-                        <i class="fa-solid fa-table-cells-large"></i>
-                        <h3>Baies vitrées</h3>
-                        <p>Baies coulissantes ou galandage pour faire entrer la lumière et agrandir visuellement vos pièces à vivre.</p>
+                    <div class="col-md-6">
+                        <div class="svc reveal" style="transition-delay:.16s"><article class="svc-card">
+                            <span class="svc-tile"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="40" height="30" rx="2"/><path d="M24 9v30"/><path d="M10 24h8M30 24h8"/><path d="M14 20l-4 4 4 4M34 20l4 4-4 4"/></svg></span>
+                            <h3>Baies vitrées</h3>
+                            <p>Baies coulissantes ou galandage pour faire entrer la lumière et agrandir visuellement vos pièces à vivre.</p>
+                        </article></div>
                     </div>
                 </div>
                 <div class="text-center mt-5">
@@ -536,19 +765,19 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <div class="process-step">
+                        <div class="process-step reveal">
                             <div class="process-num">01</div>
                             <div><h3>Prise de contact & devis gratuit</h3><p>Vous nous décrivez votre projet, nous vous répondons sous 24h avec un premier chiffrage.</p></div>
                         </div>
-                        <div class="process-step">
+                        <div class="process-step reveal">
                             <div class="process-num">02</div>
                             <div><h3>Prise de mesures à domicile</h3><p>Un rendez-vous chez vous pour mesurer précisément chaque ouverture et affiner le devis.</p></div>
                         </div>
-                        <div class="process-step">
+                        <div class="process-step reveal">
                             <div class="process-num">03</div>
                             <div><h3>Fabrication sur mesure</h3><p>Vos menuiseries sont fabriquées en France selon les mesures prises chez vous.</p></div>
                         </div>
-                        <div class="process-step">
+                        <div class="process-step reveal">
                             <div class="process-num">04</div>
                             <div><h3>Pose & suivi</h3><p>Installation par notre équipe certifiée RGE, chantier propre, et suivi après la pose.</p></div>
                         </div>
@@ -613,6 +842,8 @@
                     <div><h3>Devis gratuit sous 24h</h3><p>Décrivez-nous votre projet, nous revenons vers vous rapidement.</p></div>
                 </div>
 
+                <p class="finish-note" id="finishNote" hidden>Finition choisie : <strong></strong>. Elle sera mentionnée dans votre mail de demande de devis.</p>
+
                 <a href="https://www.google.com/maps/search/?api=1&query=18+Rue+Gaston+Darley+77140+Nemours" target="_blank" class="contact-line">
                     <span class="contact-icon"><i class="fa-solid fa-map-pin"></i></span>
                     <span><strong>18 Rue Gaston Darley, 77140 Nemours</strong><small>Ouvrir dans Google Maps</small></span>
@@ -621,7 +852,7 @@
                     <span class="contact-icon"><i class="fa-solid fa-phone"></i></span>
                     <span><strong>09 87 56 81 80</strong><small>Cliquer pour appeler</small></span>
                 </a>
-                <a href="mailto:ecofenetre45@gmail.com" class="contact-line">
+                <a href="mailto:ecofenetre45@gmail.com" class="contact-line" id="mailLink">
                     <span class="contact-icon"><i class="fa-regular fa-envelope"></i></span>
                     <span><strong>ecofenetre45@gmail.com</strong><small>Envoyer un mail</small></span>
                 </a>
@@ -665,20 +896,476 @@
     </footer>
 
     <script>
-        const themeBtn = document.getElementById('themeToggle');
-        const htmlEl = document.documentElement;
-        themeBtn.addEventListener('click', () => {
-            const isDark = htmlEl.getAttribute('data-bs-theme') === 'dark';
+        var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+        /* ---------- Paysage dans les fenêtres ----------
+           Pour utiliser votre propre photo : ajoutez images/paysage.jpg (sinon un paysage peint s'affiche) */
+        var landscapeCanvas = (function () {
+            var W = 512, H = 700, hz = 470;
+            var c = document.createElement('canvas'); c.width = W; c.height = H;
+            var x = c.getContext('2d');
+
+            var sky = x.createLinearGradient(0, 0, 0, hz);
+            sky.addColorStop(0, '#2d6f9e'); sky.addColorStop(0.45, '#7fb8d6'); sky.addColorStop(0.8, '#f6d9a8'); sky.addColorStop(1, '#fbe7bf');
+            x.fillStyle = sky; x.fillRect(0, 0, W, H);
+
+            var sg = x.createRadialGradient(360, hz - 70, 0, 360, hz - 70, 270);
+            sg.addColorStop(0, 'rgba(255,246,210,1)'); sg.addColorStop(0.12, 'rgba(255,232,175,0.95)');
+            sg.addColorStop(0.4, 'rgba(255,214,150,0.35)'); sg.addColorStop(1, 'rgba(255,214,150,0)');
+            x.fillStyle = sg; x.fillRect(0, 0, W, hz + 40);
+
+            [[90, 120, 110, 22], [300, 80, 130, 20], [430, 170, 90, 16], [170, 215, 120, 18]].forEach(function (o) {
+                x.fillStyle = 'rgba(255,255,255,0.5)'; x.beginPath(); x.ellipse(o[0], o[1], o[2], o[3], 0, 0, 6.283); x.fill();
+                x.fillStyle = 'rgba(255,255,255,0.32)'; x.beginPath(); x.ellipse(o[0] + 30, o[1] - 10, o[2] * 0.6, o[3] * 0.8, 0, 0, 6.283); x.fill();
+            });
+
+            function ridge(base, amp, freq, phase, color) {
+                x.fillStyle = color; x.beginPath(); x.moveTo(0, H);
+                for (var i = 0; i <= W; i += 8) {
+                    var y = base - amp * (Math.sin(i * freq + phase) * 0.55 + Math.sin(i * freq * 2.3 + phase * 1.7) * 0.3 + Math.sin(i * freq * 5.1 + phase) * 0.15);
+                    x.lineTo(i, y);
+                }
+                x.lineTo(W, H); x.closePath(); x.fill();
+            }
+            ridge(hz - 40, 70, 0.011, 1.2, '#9bbacb');
+            ridge(hz - 12, 55, 0.015, 3.1, '#789fa5');
+            ridge(hz + 10, 40, 0.02, 5.0, '#52846f');
+
+            var lake = x.createLinearGradient(0, hz + 14, 0, 620);
+            lake.addColorStop(0, '#b4dde4'); lake.addColorStop(1, '#2f7f93');
+            x.fillStyle = lake; x.fillRect(0, hz + 14, W, 620 - (hz + 14));
+            for (var k = 0; k < 16; k++) {
+                var ly = hz + 24 + k * 9, lw = 120 - k * 5;
+                x.fillStyle = 'rgba(255,244,205,' + (0.55 - k * 0.03) + ')';
+                x.fillRect(360 - lw / 2 + Math.sin(k * 1.7) * 14, ly, lw, 2);
+            }
+
+            ridge(650, 28, 0.02, 0.5, '#3a6e48');
+            ridge(690, 20, 0.027, 2.2, '#27502f');
+            function pine(cx, base, h, color) {
+                x.fillStyle = color;
+                for (var j = 0; j < 3; j++) {
+                    var top = base - h + j * h * 0.28, w = h * (0.28 + j * 0.13);
+                    x.beginPath(); x.moveTo(cx, top); x.lineTo(cx - w, top + h * 0.38); x.lineTo(cx + w, top + h * 0.38); x.closePath(); x.fill();
+                }
+            }
+            pine(60, 668, 120, '#1f4529'); pine(105, 676, 80, '#265233'); pine(450, 670, 105, '#1f4529'); pine(486, 678, 70, '#265233');
+            [[160, 668], [200, 676], [240, 664], [300, 680], [340, 670], [385, 678], [140, 686], [270, 690]].forEach(function (p, i) {
+                x.fillStyle = i % 2 ? '#fff6d6' : '#ffd36a';
+                x.beginPath(); x.arc(p[0], p[1], 2.4, 0, 6.283); x.fill();
+            });
+            return c;
+        })();
+
+        (function () {
+            var hs = document.querySelector('.hero-scene');
+            function paintScene() {
+                if (!hs) return;
+                hs.style.backgroundImage = 'url(' + landscapeCanvas.toDataURL('image/jpeg', 0.88) + ')';
+                hs.style.backgroundSize = 'cover';
+                hs.style.backgroundPosition = 'center';
+                hs.classList.add('painted');
+            }
+            paintScene();
+            var img = new Image();
+            img.onload = function () {
+                var cw = landscapeCanvas.width, ch = landscapeCanvas.height;
+                var sc = Math.max(cw / img.width, ch / img.height), w = img.width * sc, h = img.height * sc;
+                landscapeCanvas.getContext('2d').drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+                paintScene();
+                window.dispatchEvent(new Event('landscape'));
+            };
+            img.src = 'images/paysage.jpg';
+        })();
+
+        /* ---------- Thème clair / sombre ---------- */
+        var themeBtn = document.getElementById('themeToggle');
+        var htmlEl = document.documentElement;
+        themeBtn.addEventListener('click', function () {
+            var isDark = htmlEl.getAttribute('data-bs-theme') === 'dark';
             htmlEl.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
             themeBtn.innerText = isDark ? '🌙' : '☀️';
         });
 
+        /* ---------- Onglets ---------- */
         function activateTab(id) {
-            document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+            document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.toggle('active', p.id === 'panel-' + id); });
+            document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.toggle('active', b.dataset.tab === id); });
+            document.body.setAttribute('data-tab', id);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         window.activateTab = activateTab;
+        document.body.setAttribute('data-tab', 'accueil');
+
+        /* ---------- Apparition progressive (services + étapes) ---------- */
+        (function () {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+            els.forEach(function (el) { io.observe(el); });
+        })();
+
+        /* ---------- Curseur avant / après ---------- */
+        (function () {
+            var box = document.getElementById('cmpBox');
+            if (!box) return;
+            var before = document.getElementById('cmpBefore');
+            var handle = document.getElementById('cmpHandle');
+            var dragging = false, touched = false;
+
+            function set(p) {
+                p = Math.max(4, Math.min(96, p));
+                before.style.clipPath = 'inset(0 ' + (100 - p) + '% 0 0)';
+                handle.style.left = p + '%';
+                box.setAttribute('aria-valuenow', Math.round(p));
+            }
+            function fromEvent(e) {
+                var r = box.getBoundingClientRect();
+                set((e.clientX - r.left) / r.width * 100);
+            }
+            box.addEventListener('pointerdown', function (e) {
+                dragging = true; touched = true;
+                try { box.setPointerCapture(e.pointerId); } catch (err) {}
+                fromEvent(e);
+            });
+            box.addEventListener('pointermove', function (e) { if (dragging) fromEvent(e); });
+            ['pointerup', 'pointercancel'].forEach(function (n) { box.addEventListener(n, function () { dragging = false; }); });
+            box.addEventListener('keydown', function (e) {
+                var cur = parseFloat(box.getAttribute('aria-valuenow')) || 50;
+                if (e.key === 'ArrowLeft') { touched = true; set(cur - 5); e.preventDefault(); }
+                if (e.key === 'ArrowRight') { touched = true; set(cur + 5); e.preventDefault(); }
+            });
+            set(50);
+
+            function teaser() {
+                if (reduce) return;
+                var kf = [[0, 50], [800, 84], [1900, 16], [2800, 50]], t0 = null;
+                function step(ts) {
+                    if (touched) return;
+                    if (t0 === null) t0 = ts;
+                    var t = ts - t0;
+                    if (t >= 2800) { set(50); return; }
+                    for (var i = 1; i < kf.length; i++) {
+                        if (t <= kf[i][0]) {
+                            var a = kf[i - 1], b = kf[i];
+                            var k = (t - a[0]) / (b[0] - a[0]);
+                            k = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+                            set(a[1] + (b[1] - a[1]) * k);
+                            break;
+                        }
+                    }
+                    requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            }
+            if ('IntersectionObserver' in window) {
+                var done = false;
+                new IntersectionObserver(function (es, ob) {
+                    if (es[0].isIntersecting && !done) { done = true; ob.disconnect(); teaser(); }
+                }, { threshold: 0.6 }).observe(box);
+            }
+        })();
+
+        /* ---------- Fenêtre 3D interactive (Three.js) ---------- */
+        (function () {
+            var stage = document.getElementById('stage3d');
+            if (!stage) return;
+            var holder = stage.querySelector('.stage-canvas');
+            var ui = document.getElementById('stageUI');
+            var hint = document.getElementById('stageHint');
+
+            var conn = navigator.connection || {};
+            var weak = (navigator.deviceMemory && navigator.deviceMemory < 2) || conn.saveData === true;
+            var glOK = false;
+            try {
+                var tc = document.createElement('canvas');
+                glOK = !!(window.WebGLRenderingContext && (tc.getContext('webgl') || tc.getContext('experimental-webgl')));
+            } catch (e) {}
+            if (reduce || weak || !glOK) return;
+
+            function load() {
+                var s = document.createElement('script');
+                s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+                s.async = true;
+                s.onload = function () {
+                    try { build(); } catch (err) { if (window.console) console.warn('Fenêtre 3D indisponible', err); }
+                };
+                document.head.appendChild(s);
+            }
+            if ('requestIdleCallback' in window) requestIdleCallback(load, { timeout: 2500 }); else setTimeout(load, 900);
+
+            function build() {
+                var T = window.THREE;
+                if (!T) return;
+
+                var renderer = new T.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+                renderer.outputEncoding = T.sRGBEncoding;
+                renderer.setClearColor(0x000000, 0);
+                var cv = renderer.domElement;
+                cv.setAttribute('role', 'img');
+                cv.setAttribute('aria-label', 'Fenêtre en 3D : faites glisser pour la tourner, touchez pour l\'ouvrir');
+                cv.style.touchAction = 'pan-y';
+                holder.appendChild(cv);
+
+                var scene = new T.Scene();
+                var camera = new T.PerspectiveCamera(30, 0.8, 0.1, 100);
+                var root = new T.Group();
+                var win = new T.Group();
+                root.add(win);
+                scene.add(root);
+
+                function col(hex) { return new T.Color(hex).convertSRGBToLinear(); }
+
+                /* Reflets pour le verre et le métal */
+                var env = null;
+                try {
+                    var ec = document.createElement('canvas');
+                    ec.width = 512; ec.height = 256;
+                    var ex = ec.getContext('2d');
+                    var eg = ex.createLinearGradient(0, 0, 0, 256);
+                    eg.addColorStop(0, '#cfe6ee'); eg.addColorStop(0.5, '#f4efe3'); eg.addColorStop(1, '#b9a98a');
+                    ex.fillStyle = eg; ex.fillRect(0, 0, 512, 256);
+                    ex.fillStyle = 'rgba(255,255,255,0.95)';
+                    ex.fillRect(90, 40, 60, 70); ex.fillRect(330, 30, 90, 60); ex.fillRect(220, 150, 50, 40);
+                    var et = new T.CanvasTexture(ec);
+                    et.mapping = T.EquirectangularReflectionMapping;
+                    et.encoding = T.sRGBEncoding;
+                    var pm = new T.PMREMGenerator(renderer);
+                    pm.compileEquirectangularShader();
+                    env = pm.fromEquirectangular(et).texture;
+                    et.dispose(); pm.dispose();
+                } catch (e) { env = null; }
+
+                /* Matières */
+                var frameMat = new T.MeshStandardMaterial({ color: col('#EDEBE5'), roughness: 0.5, metalness: 0 });
+                var sealMat = new T.MeshStandardMaterial({ color: col('#23282b'), roughness: 0.8, metalness: 0 });
+                var sillMat = new T.MeshStandardMaterial({ color: col('#D9D2C2'), roughness: 0.85, metalness: 0 });
+                var metalMat = new T.MeshStandardMaterial({ color: col('#C9CCCF'), roughness: 0.3, metalness: 1, envMap: env, envMapIntensity: 1 });
+                var glassMat = new T.MeshPhysicalMaterial({
+                    color: col('#dff0f2'), roughness: 0.05, metalness: 0.1, transparent: true, opacity: 0.2,
+                    clearcoat: 1, clearcoatRoughness: 0.05, envMap: env, envMapIntensity: 1.4,
+                    side: T.DoubleSide, depthWrite: false
+                });
+
+                function streakTexture() {
+                    var c = document.createElement('canvas');
+                    c.width = 128; c.height = 256;
+                    var x = c.getContext('2d');
+                    var g = x.createLinearGradient(0, 0, 128, 256);
+                    g.addColorStop(0, 'rgba(255,255,255,0)');
+                    g.addColorStop(0.28, 'rgba(255,255,255,0)');
+                    g.addColorStop(0.38, 'rgba(255,255,255,0.55)');
+                    g.addColorStop(0.46, 'rgba(255,255,255,0)');
+                    g.addColorStop(0.55, 'rgba(255,255,255,0.28)');
+                    g.addColorStop(0.6, 'rgba(255,255,255,0)');
+                    g.addColorStop(1, 'rgba(255,255,255,0)');
+                    x.fillStyle = g; x.fillRect(0, 0, 128, 256);
+                    var t = new T.CanvasTexture(c);
+                    t.encoding = T.sRGBEncoding;
+                    return t;
+                }
+                var streakMat = new T.MeshBasicMaterial({ map: streakTexture(), transparent: true, opacity: 0.75, depthWrite: false });
+
+                /* Paysage visible à travers la vitre */
+                function landscapeTexture() {
+                    var t = new T.CanvasTexture(landscapeCanvas);
+                    t.encoding = T.sRGBEncoding;
+                    t.anisotropy = 4;
+                    window.addEventListener('landscape', function () { t.needsUpdate = true; });
+                    return t;
+                }
+
+                /* Cadre rectangulaire composé de 4 barres */
+                function bars(w, h, t, d, mat) {
+                    var g = new T.Group();
+                    var top = new T.Mesh(new T.BoxGeometry(w, t, d), mat); top.position.y = h / 2 - t / 2;
+                    var bot = new T.Mesh(new T.BoxGeometry(w, t, d), mat); bot.position.y = -h / 2 + t / 2;
+                    var l = new T.Mesh(new T.BoxGeometry(t, h - 2 * t, d), mat); l.position.x = -w / 2 + t / 2;
+                    var r = new T.Mesh(new T.BoxGeometry(t, h - 2 * t, d), mat); r.position.x = w / 2 - t / 2;
+                    g.add(top); g.add(bot); g.add(l); g.add(r);
+                    return g;
+                }
+
+                var Wo = 3.0, Ho = 4.2;
+
+                var outer = bars(Wo + 0.48, Ho + 0.48, 0.24, 0.5, frameMat);
+                win.add(outer);
+
+                var back = new T.Mesh(new T.PlaneGeometry(Wo + 0.1, Ho + 0.1), new T.MeshBasicMaterial({ map: landscapeTexture() }));
+                back.position.z = -0.2;
+                win.add(back);
+
+                var sill = new T.Mesh(new T.BoxGeometry(Wo + 1.0, 0.16, 0.8), sillMat);
+                sill.position.set(0, -(Ho / 2 + 0.24 + 0.08), 0.15);
+                win.add(sill);
+
+                function makeSash(w, h) {
+                    var g = new T.Group();
+                    g.add(bars(w, h, 0.16, 0.3, frameMat));
+                    g.add(bars(w - 0.28, h - 0.28, 0.035, 0.14, sealMat));
+                    var gw = w - 0.32, gh = h - 0.32;
+                    var glass = new T.Mesh(new T.PlaneGeometry(gw, gh), glassMat);
+                    g.add(glass);
+                    var streak = new T.Mesh(new T.PlaneGeometry(gw, gh), streakMat);
+                    streak.position.z = 0.015;
+                    g.add(streak);
+                    return g;
+                }
+
+                var sw = Wo / 2 - 0.01, sh = Ho - 0.02;
+                var pivotL = new T.Group(); pivotL.position.set(-Wo / 2, 0, 0);
+                var sashL = makeSash(sw, sh); sashL.position.x = sw / 2; pivotL.add(sashL);
+                var pivotR = new T.Group(); pivotR.position.set(Wo / 2, 0, 0);
+                var sashR = makeSash(sw, sh); sashR.position.x = -sw / 2; pivotR.add(sashR);
+                win.add(pivotL); win.add(pivotR);
+
+                /* Poignée */
+                var plate = new T.Mesh(new T.BoxGeometry(0.1, 0.34, 0.04), metalMat);
+                plate.position.set(-sw / 2 + 0.1, 0, 0.17);
+                sashR.add(plate);
+                var lever = new T.Mesh(new T.BoxGeometry(0.05, 0.3, 0.06), metalMat);
+                lever.position.set(-sw / 2 + 0.1, -0.14, 0.22);
+                sashR.add(lever);
+
+                /* Charnières */
+                [-1.2, 1.2].forEach(function (y) {
+                    [-Wo / 2, Wo / 2].forEach(function (x) {
+                        var hg = new T.Mesh(new T.CylinderGeometry(0.06, 0.06, 0.3, 14), metalMat);
+                        hg.position.set(x, y, 0.17);
+                        win.add(hg);
+                    });
+                });
+
+                /* Lumières */
+                scene.add(new T.AmbientLight(0xffffff, 0.2));
+                var key = new T.DirectionalLight(0xfff1dd, 0.85); key.position.set(4, 6, 7); scene.add(key);
+                var rim = new T.DirectionalLight(0xa9d8ff, 0.35); rim.position.set(-5, 2, -4); scene.add(rim);
+
+                /* Finitions */
+                var FIN = {
+                    blanc: { n: 'Blanc', c: '#EDEBE5', r: 0.5 },
+                    anthracite: { n: 'Anthracite', c: '#3A3F43', r: 0.38 },
+                    chene: { n: 'Chêne doré', c: '#B9814E', r: 0.62 },
+                    sauge: { n: 'Vert sauge', c: '#3F5D4E', r: 0.5 }
+                };
+                var current = 'blanc';
+                var finishName = document.getElementById('finishName');
+                var swatches = Array.prototype.slice.call(stage.querySelectorAll('.sw'));
+                function setFinish(k) {
+                    var f = FIN[k]; if (!f) return;
+                    current = k;
+                    frameMat.color.copy(col(f.c));
+                    frameMat.roughness = f.r;
+                    finishName.textContent = f.n;
+                    swatches.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-finish') === k ? 'true' : 'false'); });
+                }
+                swatches.forEach(function (b) { b.addEventListener('click', function () { setFinish(b.getAttribute('data-finish')); }); });
+
+                /* Ouvrir / fermer */
+                var openNow = 0, openTarget = 0, userToggled = false;
+                var toggleBtn = document.getElementById('toggleSash');
+                function syncLabel() { toggleBtn.querySelector('span').textContent = openTarget ? 'Fermer la fenêtre' : 'Ouvrir la fenêtre'; }
+                function toggle() { userToggled = true; openTarget = openTarget ? 0 : 1; syncLabel(); }
+                toggleBtn.addEventListener('click', toggle);
+                setTimeout(function () { if (!userToggled) { openTarget = 1; syncLabel(); } }, 900);
+
+                /* Demande de devis avec la finition */
+                document.getElementById('finishQuote').addEventListener('click', function () {
+                    var f = FIN[current];
+                    var subject = 'Demande de devis — fenêtre finition ' + f.n;
+                    var body = 'Bonjour,\n\nJe souhaite un devis pour une fenêtre, finition ' + f.n + '.\n\nMon projet :\n';
+                    var link = document.getElementById('mailLink');
+                    if (link) link.href = 'mailto:ecofenetre45@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+                    var note = document.getElementById('finishNote');
+                    if (note) { note.querySelector('strong').textContent = f.n; note.hidden = false; }
+                    activateTab('contact');
+                });
+
+                /* Taille et cadrage */
+                function resize() {
+                    var w = holder.clientWidth, h = holder.clientHeight;
+                    if (!w || !h) return;
+                    renderer.setSize(w, h, false);
+                    camera.aspect = w / h;
+                    var tan = Math.tan(T.MathUtils.degToRad(camera.fov / 2));
+                    var need = Math.max(5.8 / (2 * tan), 4.8 / (2 * tan * camera.aspect));
+                    camera.position.set(0, 0, need);
+                    camera.lookAt(0, 0, 0);
+                    camera.updateProjectionMatrix();
+                }
+                if ('ResizeObserver' in window) new ResizeObserver(resize).observe(holder); else window.addEventListener('resize', resize);
+                resize();
+
+                /* Interaction : glisser pour tourner, toucher pour ouvrir */
+                var rotY = -0.5, rotX = 0.08, tgtY = 0.35, tgtX = 0.06;
+                var drag = false, moved = false, sx = 0, sRot = 0, t0 = 0, lastTouch = 0;
+                function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+                cv.addEventListener('pointerdown', function (e) {
+                    drag = true; moved = false; sx = e.clientX; sRot = tgtY; t0 = performance.now(); lastTouch = t0;
+                    try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+                });
+                cv.addEventListener('pointermove', function (e) {
+                    lastTouch = performance.now();
+                    if (drag) {
+                        var dx = e.clientX - sx;
+                        if (Math.abs(dx) > 6) moved = true;
+                        tgtY = clamp(sRot + dx * 0.012, -0.9, 0.9);
+                    } else if (e.pointerType === 'mouse') {
+                        var r = cv.getBoundingClientRect();
+                        tgtY = ((e.clientX - r.left) / r.width - 0.5) * 1.1;
+                        tgtX = 0.06 + ((e.clientY - r.top) / r.height - 0.5) * 0.3;
+                    }
+                });
+                cv.addEventListener('pointerup', function () {
+                    if (!drag) return;
+                    drag = false; lastTouch = performance.now();
+                    if (!moved && performance.now() - t0 < 400) toggle();
+                });
+                cv.addEventListener('pointercancel', function () { drag = false; });
+
+                /* Boucle d'animation */
+                var raf = 0, inView = true;
+                function frame() {
+                    raf = requestAnimationFrame(frame);
+                    var t = performance.now() / 1000;
+                    if (!drag && performance.now() - lastTouch > 2500) {
+                        tgtY = Math.sin(t * 0.55) * 0.45;
+                        tgtX = 0.06 + Math.sin(t * 0.4) * 0.03;
+                    }
+                    rotY += (tgtY - rotY) * 0.08;
+                    rotX += (tgtX - rotX) * 0.08;
+                    root.rotation.y = rotY;
+                    root.rotation.x = rotX;
+                    openNow += (openTarget - openNow) * 0.06;
+                    var a = openNow * 1.2;
+                    pivotL.rotation.y = -a;
+                    pivotR.rotation.y = a;
+                    win.position.y = Math.sin(t * 0.9) * 0.05;
+                    renderer.render(scene, camera);
+                }
+                function sync() {
+                    var run = inView && !document.hidden;
+                    if (run && !raf) raf = requestAnimationFrame(frame);
+                    else if (!run && raf) { cancelAnimationFrame(raf); raf = 0; }
+                }
+                if ('IntersectionObserver' in window) {
+                    new IntersectionObserver(function (es) { inView = es[0].isIntersecting; sync(); }, { threshold: 0.05 }).observe(stage);
+                }
+                document.addEventListener('visibilitychange', sync);
+
+                renderer.render(scene, camera);
+                stage.classList.add('has-3d');
+                ui.hidden = false;
+                hint.hidden = false;
+                syncLabel();
+                sync();
+            }
+        })();
     </script>
 </body>
 </html>
