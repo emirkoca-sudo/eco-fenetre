@@ -376,6 +376,13 @@
         .cmp-captions strong { display: block; color: var(--ink); font-size: 0.95rem; }
         .cmp-captions div:last-child { text-align: right; }
 
+        /* ============ VIDEO ============ */
+        .video-block { margin-top: 44px; text-align: center; }
+        .video-block h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 8px; }
+        .video-block > p { color: var(--ink-soft); max-width: 50ch; margin: 0 auto 20px; }
+        .video-frame { max-width: 380px; margin: 0 auto; aspect-ratio: 9/16; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); background: #0b0e0b; }
+        .video-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
         /* ============ AVIS GOOGLE ============ */
         .review-strip {
             display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
@@ -697,6 +704,16 @@
                         </div>
                     </div>
 
+                    <div class="video-block">
+                        <h2 class="display-font">Nos chantiers en vidéo</h2>
+                        <p>Nos réalisations, nos avant/après et les étapes de votre projet en 30 secondes.</p>
+                        <div class="video-frame">
+                            <video controls playsinline preload="none" poster="images/video-poster.jpg" aria-label="Vidéo de présentation d'Eco Fenêtre : réalisations, avant/après et étapes du projet">
+                                <source src="images/ecofenetre_site.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+
                     <div class="review-strip">
                         <div class="d-flex align-items-center gap-3">
                             <i class="fa-brands fa-google fs-3" style="color: var(--oak);"></i>
@@ -796,9 +813,9 @@
 
                 <div class="row g-4 mb-5">
                     <div class="col-md-4">
-                        <a href="https://www.instagram.com/eco_fenetre_77/" target="_blank" class="social-card">
+                        <a href="https://www.instagram.com/eco_fenetre77/" target="_blank" class="social-card">
                             <i class="fa-brands fa-instagram icon-social"></i>
-                            <h3>@eco_fenetre_77</h3>
+                            <h3>@eco_fenetre77</h3>
                             <p>Suivez nos poses de fenêtres, volets et baies vitrées au fil des chantiers.</p>
                         </a>
                     </div>
